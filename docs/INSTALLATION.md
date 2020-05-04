@@ -81,7 +81,7 @@ lancer **PostgreSQL** puis démarrer **pgAdmin4** :
 ![Lancement pgsql](./imgs/start_pga4.png)
 
 en cliquant sur **pgAdmin4**, le navigateur s'ouvrira donnant accès au panneau d'administration des dbs PostgreSQL.  
-On doit ensuite créer un utilisateur edt avec le mot de passe que l'on veut (ne pas l'oublier, le noter quelque part) ainsi qu'une base de donnée, portant le même nom, **edt** par exemple.
+On doit ensuite créer un utilisateur edt avec le mot de passe que l'on veut (ne pas l'oublier, le noter quelque part). Dans l'onglet **privilèges**, cocher 'can login'. ainsi qu'une base de donnée, portant le même nom, **edt** par exemple.
 
 ![Lancement pgsql](./imgs/create_user_db.png)
  
