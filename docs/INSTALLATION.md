@@ -35,8 +35,8 @@ On peut ajouter dans `bin/${nom_du_logiciel}` différentes versions d'un même l
 
 On utilisera la version dernière version 7.3 de **PHP**. On peut la télécharger ici :  
 
-https://windows.net/download/  
-https://windows.net/downloads/releases/php-7.3.17-nts-Win32-VC15-x64.zip (7.3.17)
+https://windows.php.net/download/  
+https://windows.php.net/downloads/releases/php-7.3.17-nts-Win32-VC15-x64.zip (7.3.17)
 
 On va ensuite désarchiver l'archive obtenu dans le répertoire **PHP** afin d'obtenir :
 
