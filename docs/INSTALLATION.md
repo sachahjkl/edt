@@ -1,6 +1,6 @@
-# Guide d'installation de l'environnement de dev du projet.
+# Guide d'installation de l'environnement de dev.
 
-# Laragon
+## Installation Laragon
 Afin d'avoir accès à un serveur web nginx préconfiguré et plein d'autres outils (Terminal, GUI client pour accéder aux BDs, nodejs, apache, **Nginx**, **PHP**, etc), On installe un logiciel qui s'appelle laragon.   
 
 https://laragon.org/  
@@ -52,7 +52,7 @@ On va ensuite désarchiver l'archive obtenu dans le répertoire **PHP** afin d'o
     └── snapshot.txt
 ```
 
-on ira extra
+on ira extraire 
 
 ## PostgreSQL
 
@@ -64,10 +64,32 @@ http://get.enterprisedb.com/postgresql/postgresql-12.2-2-windows-x64-binaries.zi
 
 On va ensuite créer un répertoire `./laragon/bin/postgresql` et désarchiver l'archive que nous avons téléchargé de **PostgreSQL** dans `./laragon/bin/postgresql/postgresql-${num_version}` (ici `postgresql-12.2`).
 
-## Configuration laragon 
+## Configuration laragon
 
 On va dire à laragon d'utiliser **PostgreSQL** et **Nginx** (bien saisir les mêmes ports):
 
 ![Paramètres laragon](./imgs/laragon_settings.png)
 
+Et on choisit d'utiliser la version php que nous avons installé précédemment.
+
 ![Paramètres laragon PHP](./imgs/laragon_settings_PHP.png)
+
+## Pour se connecter au serveur **PostgreSQL**
+
+lancer **PostgreSQL** puis démarrer **pgAdmin4** :
+
+![Lancement pgsql](./imgs/start_pga4.png)
+
+en cliquant sur **pgAdmin4**, le navigateur s'ouvrira donnant accès au panneau d'administration des dbs PostgreSQL.  
+On doit ensuite créer un utilisateur edt avec le mot de passe que l'on veut (ne pas l'oublier, le noter quelque part) ainsi qu'une base de donnée, portant le même nom, **edt** par exemple.
+
+![Lancement pgsql](./imgs/create_user_db.png)
+ 
+# Configuration de l'environnement de prod
+
+guide pour Nginx/PHP 7.3 :
+
+https://websiteforstudents.com/setup-nginx-web-servers-with-php-support-on-ubuntu-servers/
+
+
+
