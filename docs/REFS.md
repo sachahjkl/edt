@@ -13,3 +13,8 @@
 ## Bonnes pratiques
 
 - https://symfony.com/doc/current/best_practices.html#use-environment-variables-for-infrastructure-configuration
+
+## Héritage
+
+- https://www.youtube.com/watch?v=hNAMEWYCkAM
+- https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/reference/inheritance-mapping.html
