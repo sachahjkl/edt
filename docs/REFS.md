@@ -22,6 +22,7 @@
 ## Ajout de données par défaut (Fixtures)
 
 - https://symfony.com/doc/current/testing/database.html#doctrine-fixtures
+- https://symfony.com/doc/current/testing/database.html#dummy-data-fixtures
 
 ## Insert ManyToMany (inversedBy/mappedBy)
 

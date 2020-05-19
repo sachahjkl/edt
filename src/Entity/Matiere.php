@@ -27,7 +27,7 @@ class Matiere
     /**
      * @ORM\Column(type="smallint")
      */
-    private $creditsECTS;
+    private $credits_ects;
 
     /**
      * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="matiere", orphanRemoval=true)
