@@ -6,7 +6,7 @@ use App\Repository\PersonneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * @ORM\Entity(repositoryClass=PersonneRepository::class)
@@ -126,5 +126,12 @@ abstract class Personne extends Utilisateur
         }
 
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = parent::getRoles();
+        $roles[] = 'ROLE_PERSON';
+        return array_unique($roles);
     }
 }

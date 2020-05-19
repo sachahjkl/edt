@@ -28,6 +28,12 @@ class Note
      */
     private $eleve;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Examen::class, inversedBy="notes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $examen;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +59,18 @@ class Note
     public function setEleve(?Eleve $eleve): self
     {
         $this->eleve = $eleve;
+
+        return $this;
+    }
+
+    public function getExamen(): ?Examen
+    {
+        return $this->examen;
+    }
+
+    public function setExamen(?Examen $examen): self
+    {
+        $this->examen = $examen;
 
         return $this;
     }

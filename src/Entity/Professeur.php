@@ -15,14 +15,24 @@ class Professeur extends Personne
 {
 
     /**
-     * @ORM\ManyToMany(targetEntity=Matiere::class, mappedBy="enseigne")
-     */
-    private $matieres;
-
-    /**
      * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="professeur")
      */
     private $cours;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Matiere::class, mappedBy="responsable", cascade={"persist", "remove"})
+     */
+    private $matiere_responsable;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Formation::class, mappedBy="responsable", cascade={"persist", "remove"})
+     */
+    private $formation_responsable;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Matiere::class, mappedBy="professeurs")
+     */
+    private $matieres;
 
     public function __construct()
     {
@@ -33,7 +43,7 @@ class Professeur extends Personne
 
     public function getRoles(): array
     {
-        $roles = $this->getRoles();
+        $roles = parent::getRoles();
         $roles[] = 'ROLE_PROF';
         return array_unique($roles);
     }
@@ -92,6 +102,40 @@ class Professeur extends Personne
             if ($cour->getProfesseur() === $this) {
                 $cour->setProfesseur(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getMatiereResponsable(): ?Matiere
+    {
+        return $this->matiere_responsable;
+    }
+
+    public function setMatiereResponsable(Matiere $matiere_responsable): self
+    {
+        $this->matiere_responsable = $matiere_responsable;
+
+        // set the owning side of the relation if necessary
+        if ($matiere_responsable->getResponsable() !== $this) {
+            $matiere_responsable->setResponsable($this);
+        }
+
+        return $this;
+    }
+
+    public function getFormationResponsable(): ?Formation
+    {
+        return $this->formation_responsable;
+    }
+
+    public function setFormationResponsable(Formation $formation_responsable): self
+    {
+        $this->formation_responsable = $formation_responsable;
+
+        // set the owning side of the relation if necessary
+        if ($formation_responsable->getResponsable() !== $this) {
+            $formation_responsable->setResponsable($this);
         }
 
         return $this;

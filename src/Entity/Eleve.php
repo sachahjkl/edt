@@ -39,7 +39,7 @@ class Eleve extends Personne
 
     public function getRoles(): array
     {
-        $roles = $this->getRoles();
+        $roles = parent::getRoles();
         $roles[] = 'ROLE_ELEVE';
         return array_unique($roles);
     }

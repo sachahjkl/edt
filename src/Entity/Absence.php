@@ -33,6 +33,12 @@ class Absence
      */
     private $absent;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Cours::class, inversedBy="absences")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $cours;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +76,18 @@ class Absence
     public function setAbsent(?Eleve $absent): self
     {
         $this->absent = $absent;
+
+        return $this;
+    }
+
+    public function getCours(): ?Cours
+    {
+        return $this->cours;
+    }
+
+    public function setCours(?Cours $cours): self
+    {
+        $this->cours = $cours;
 
         return $this;
     }

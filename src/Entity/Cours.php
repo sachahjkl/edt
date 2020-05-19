@@ -3,10 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\CoursRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CoursRepository::class)
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type",type="string")
+ * @ORM\DiscriminatorMap({
+ *     "exam" = "Examen",
+ *     "cours" = "Cours"
+ * })
  */
 class Cours
 {
@@ -60,6 +68,16 @@ class Cours
      * @ORM\JoinColumn(nullable=false)
      */
     private $groupe;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Absence::class, mappedBy="cours", orphanRemoval=true)
+     */
+    private $absences;
+
+    public function __construct()
+    {
+        $this->absences = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -158,6 +176,37 @@ class Cours
     public function setGroupe(?Groupe $groupe): self
     {
         $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Absence[]
+     */
+    public function getAbsences(): Collection
+    {
+        return $this->absences;
+    }
+
+    public function addAbsence(Absence $absence): self
+    {
+        if (!$this->absences->contains($absence)) {
+            $this->absences[] = $absence;
+            $absence->setCours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbsence(Absence $absence): self
+    {
+        if ($this->absences->contains($absence)) {
+            $this->absences->removeElement($absence);
+            // set the owning side to null (unless already changed)
+            if ($absence->getCours() === $this) {
+                $absence->setCours(null);
+            }
+        }
 
         return $this;
     }

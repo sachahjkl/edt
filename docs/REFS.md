@@ -22,3 +22,7 @@
 ## Ajout de données par défaut (Fixtures)
 
 - https://symfony.com/doc/current/testing/database.html#doctrine-fixtures
+
+## Insert ManyToMany (inversedBy/mappedBy)
+
+- https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/reference/unitofwork-associations.html

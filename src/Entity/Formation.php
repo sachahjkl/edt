@@ -29,16 +29,17 @@ class Formation
      */
     private $duree_annees;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Professeur::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $responsable;
 
     /**
      * @ORM\OneToMany(targetEntity=Groupe::class, mappedBy="formation", orphanRemoval=true)
      */
     private $groupes;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Professeur::class, inversedBy="formation_responsable", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $responsable;
 
     public function __construct()
     {
@@ -74,18 +75,6 @@ class Formation
         return $this;
     }
 
-    public function getResponsable(): ?Professeur
-    {
-        return $this->responsable;
-    }
-
-    public function setResponsable(Professeur $responsable): self
-    {
-        $this->responsable = $responsable;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Groupe[]
      */
@@ -113,6 +102,18 @@ class Formation
                 $groupe->setFormation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getResponsable(): ?Professeur
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(Professeur $responsable): self
+    {
+        $this->responsable = $responsable;
 
         return $this;
     }

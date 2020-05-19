@@ -30,7 +30,12 @@ class Matiere
     private $creditsECTS;
 
     /**
-     * @ORM\OneToOne(targetEntity=Professeur::class, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="matiere", orphanRemoval=true)
+     */
+    private $cours;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Professeur::class, inversedBy="matiere_responsable", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $responsable;
@@ -38,17 +43,13 @@ class Matiere
     /**
      * @ORM\ManyToMany(targetEntity=Professeur::class, inversedBy="matieres")
      */
-    private $enseigne;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="matiere", orphanRemoval=true)
-     */
-    private $cours;
+    private $professeurs;
 
     public function __construct()
     {
         $this->enseigne = new ArrayCollection();
         $this->cours = new ArrayCollection();
+        $this->professeurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +145,32 @@ class Matiere
             if ($cour->getMatiere() === $this) {
                 $cour->setMatiere(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Professeur[]
+     */
+    public function getProfesseurs(): Collection
+    {
+        return $this->professeurs;
+    }
+
+    public function addProfesseur(Professeur $professeur): self
+    {
+        if (!$this->professeurs->contains($professeur)) {
+            $this->professeurs[] = $professeur;
+        }
+
+        return $this;
+    }
+
+    public function removeProfesseur(Professeur $professeur): self
+    {
+        if ($this->professeurs->contains($professeur)) {
+            $this->professeurs->removeElement($professeur);
         }
 
         return $this;
