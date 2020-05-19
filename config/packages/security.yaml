@@ -1,14 +1,41 @@
 security:
+    encoders:
+        App\Entity\Utilisateur:
+            algorithm: auto
+        App\Entity\Administrateur:
+            algorithm: auto
+        App\Entity\Eleve:
+            algorithm: auto
+        App\Entity\Personne:
+            algorithm: auto
+        App\Entity\Professeur:
+            algorithm: auto
+
+
+
+
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\Professeur
+                property: username
+        # used to reload user from session & other features (e.g. switch_user)
+        # used to reload user from session & other features (e.g. switch_user)
+        # used to reload user from session & other features (e.g. switch_user)
+        # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: lazy
-            provider: users_in_memory
+            provider: app_user_provider
+    role_hierarchy:
+        ROLE_ELEVE: ROLE_USER
+        ROLE_ADMIN: [ROLE_USER, ROLE_PROF]
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

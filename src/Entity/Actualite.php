@@ -32,6 +32,12 @@ class Actualite
      */
     private $date_creation;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Administrateur::class, inversedBy="actualites")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $auteur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,18 @@ class Actualite
     public function setDateCreation(\DateTimeInterface $date_creation): self
     {
         $this->date_creation = $date_creation;
+
+        return $this;
+    }
+
+    public function getAuteur(): ?Administrateur
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(?Administrateur $auteur): self
+    {
+        $this->auteur = $auteur;
 
         return $this;
     }

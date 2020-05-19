@@ -18,3 +18,7 @@
 
 - https://www.youtube.com/watch?v=hNAMEWYCkAM
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/reference/inheritance-mapping.html
+
+## Ajout de données par défaut (Fixtures)
+
+- https://symfony.com/doc/current/testing/database.html#doctrine-fixtures
