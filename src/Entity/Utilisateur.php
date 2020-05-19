@@ -12,7 +12,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\DiscriminatorColumn(name="type",type="string")
  * @ORM\DiscriminatorMap({
  *     "personne" = "Personne",
- *     "admin" = "Administrateur"
+ *     "admin" = "Administrateur",
+ *     "eleve" = "Eleve",
+ *     "prof" = "Professeur"
  * })
  */
 abstract class Utilisateur implements UserInterface
