@@ -12,4 +12,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Eleve extends Personne
 {
 
+    public function getRoles(): array
+    {
+        $roles = $this->getRoles();
+        $roles[] = 'ROLE_ELEVE';
+        return array_unique($roles);
+    }
+
 }

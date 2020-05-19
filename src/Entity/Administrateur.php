@@ -53,4 +53,11 @@ class Administrateur extends Utilisateur
 
         return $this;
     }
+
+    public function getRoles(): array
+    {
+        $roles = $this->getRoles();
+        $roles[] = 'ROLE_ADMIN';
+        return array_unique($roles);
+    }
 }

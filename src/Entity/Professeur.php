@@ -12,4 +12,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Professeur extends Personne
 {
 
+    public function getRoles(): array
+    {
+        $roles = $this->getRoles();
+        $roles[] = 'ROLE_PROF';
+        return array_unique($roles);
+    }
+
 }
