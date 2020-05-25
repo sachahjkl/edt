@@ -11,13 +11,13 @@ class AccueilController extends AbstractController
 {
     /**
      * @Route("/accueil", name="accueil")
-     * @IsGranted("ROLE_PERSONNE")
+     * @IsGranted("ROLE_USER")
      */
     public function index(GroupeRepository $groupeRepository)
     {
-        
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
         ]);
     }
+
 }
