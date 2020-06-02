@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title|default("Accueil") }}{% endblock %}
+{% block body %}
+    {% embed "user/_navbar.html.twig"%}
+        {% block nav_items %}
+
+        {% endblock %}
+    {% endembed %}
+    <div class="container">
+        Personne
+    </div>
+{% endblock %}
