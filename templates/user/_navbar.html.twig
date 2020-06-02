@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light {{ nav_bg|default("bg-primary") }} shadow-sm">
-    <a class="navbar-brand" href="#">{% block navbarBrand %}<i class="fas fa-compass"></i> EDT{% endblock %}</a>
+<nav class="navbar navbar-expand-lg navbar-dark {{ nav_bg|default("bg-primary") }} shadow-sm">
+    <a class="navbar-brand" href="#">{% block nav_brand %}<i class="fas fa-compass"></i> EDT{% endblock %}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,10 +8,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             {% block nav_items %}
+
             {% endblock %}
         </ul>
+        <form class="form-inline" action="{{ path('security_logout') }}">
+            <button class="btn btn-light my-sm-0" type="submit">Logout</button>
+        </form>
     </div>
-    <a class="btn btn-light" href="{{ path("security_logout") }}">Logout</a>
 </nav>
 
 {% block javascripts %}

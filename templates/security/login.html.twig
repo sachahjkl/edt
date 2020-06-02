@@ -10,13 +10,13 @@
             {% endif %}
 
             {% if app.user %}
-                <div class="mb-3">
+                <div class="mt-2">
                     Vous êtes en tant que {{ app.user.username }}, <a
                             href="{{ path('security_logout') }}">Déconnexion</a>
                 </div>
             {% endif %}
 
-            <h1 class="h3 mb-3 font-weight-normal">Veuillez vous connecter</h1>
+            <h1 class="h3 mt-2 font-weight-normal">Veuillez vous connecter</h1>
             <label for="inputUsername">Nom d'utilisateur</label>
             <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
                    required
@@ -28,7 +28,7 @@
                    value="{{ csrf_token('authenticate') }}"
             >
 
-            <div class="custom-control custom-checkbox mb-3">
+            <div class="custom-control custom-checkbox mt-2">
                 <input class="custom-control-input" type="checkbox" name="_remember_me" id="_remember_me">
                 <label class="custom-control-label" for="_remember_me"> Se souvenir de moi </label>
             </div>

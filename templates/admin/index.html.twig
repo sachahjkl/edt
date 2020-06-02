@@ -2,11 +2,14 @@
 {% set accordion_id = "accordion_admin_services" %}
 {% set collapse_id = 1 %}
 
-{% block title %}{{ title|default("Accueil") }}{% endblock %}
+{% block title %}{{ title|default("Accueil - Admin " ~ app.user.username ) }}{% endblock %}
 {% block body %}
     {% embed "user/_navbar.html.twig" with {nav_bg:"bg-danger"} %}
+        {% block nav_brand %}
+            {{ parent() }} - Dashboard de {{ app.user.username }}
+        {% endblock %}
         {% block nav_items %}
-
+            {{ parent() }}
         {% endblock %}
     {% endembed %}
     {% embed "user/_container.html.twig" %}
@@ -46,13 +49,6 @@
                             {% block text %}
                             {% endblock %}
                         {% endembed %}
-                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
-                            {% block button %}
-                                Gérer Utilisateurs
-                            {% endblock %}
-                            {% block text %}
-                            {% endblock %}
-                        {% endembed %}
                         {% set collapse_id = collapse_id + 1 %}
                         {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
                             {% block button %}
@@ -62,6 +58,13 @@
                             {% endblock %}
                         {% endembed %}
                         {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                Gérer Utilisateurs
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
                     </div>
                 {% endblock %}
             {% endembed %}
