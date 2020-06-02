@@ -1,6 +1,8 @@
 # Références
 
-- Pour calendrier : https://github.com/tattali/CalendarBundle
+- Pour calendrier : 
+    * https://github.com/tattali/CalendarBundle
+    * https://github.com/tattali/CalendarBundle/blob/master/src/Resources/doc/doctrine-crud.md#full-subscriber
 
 # Tuto PostgreSQL
 

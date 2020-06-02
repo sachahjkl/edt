@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200519205556 extends AbstractMigration
+final class Version20200602125408 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -64,7 +64,7 @@ final class Version20200519205556 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_CFBDFA14A6CC7B2 ON note (eleve_id)');
         $this->addSql('CREATE INDEX IDX_CFBDFA145C8659A ON note (examen_id)');
         $this->addSql('CREATE TABLE professeur (id INT NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE salle (id INT NOT NULL, numero VARCHAR(5) NOT NULL, capacite SMALLINT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE salle (id INT NOT NULL, numero VARCHAR(15) NOT NULL, capacite SMALLINT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('ALTER TABLE absence ADD CONSTRAINT FK_765AE0C9E1399015 FOREIGN KEY (absent_id) REFERENCES eleve (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE absence ADD CONSTRAINT FK_765AE0C97ECF78B0 FOREIGN KEY (cours_id) REFERENCES cours (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE actualite ADD CONSTRAINT FK_5492819760BB6FE6 FOREIGN KEY (auteur_id) REFERENCES administrateur (id) NOT DEFERRABLE INITIALLY IMMEDIATE');

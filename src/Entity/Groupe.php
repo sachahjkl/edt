@@ -133,7 +133,11 @@ class Groupe
                 $cour->setGroupe(null);
             }
         }
-
         return $this;
+    }
+
+    public function __toString()
+    {
+        return strval($this->getNom());
     }
 }

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Cours</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cour.id }}</td>
+            </tr>
+            <tr>
+                <th>Debut</th>
+                <td>{{ cour.debut ? cour.debut|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin</th>
+                <td>{{ cour.fin ? cour.fin|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Devoirs</th>
+                <td>{{ cour.devoirs }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ cour.statut ? 'Yes' : 'No' }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{{ path('cours_index') }}"> {{ return_label|default("Retour à la liste") }}</a>
+        <a class="btn btn-primary" type="button" href="{{ path('cours_edit', {'id': cour.id}) }}">edit</a>
+
+        {{ include('cours/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

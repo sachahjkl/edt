@@ -71,12 +71,12 @@ class Matiere
 
     public function getCreditsECTS(): ?int
     {
-        return $this->creditsECTS;
+        return $this->credits_ects;
     }
 
     public function setCreditsECTS(int $creditsECTS): self
     {
-        $this->creditsECTS = $creditsECTS;
+        $this->credits_ects = $creditsECTS;
 
         return $this;
     }
@@ -174,5 +174,10 @@ class Matiere
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return strval($this->getIntitule());
     }
 }

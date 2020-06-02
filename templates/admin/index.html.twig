@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+{% set accordion_id = "accordion_admin_services" %}
+{% set collapse_id = 1 %}
+
+{% block title %}{{ title|default("Accueil") }}{% endblock %}
+{% block body %}
+    {% embed "user/_navbar.html.twig" with {nav_bg:"bg-danger"} %}
+        {% block nav_items %}
+
+        {% endblock %}
+    {% endembed %}
+    {% embed "user/_container.html.twig" %}
+        {% block container %}
+            {% embed "user/_card.html.twig" %}
+                {% block title %}Services disponible : {% endblock %}
+                {% block text %}
+                    <div class="accordion" id="{{ accordion_id }}">
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                Gérer Utilisateurs
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                Gérer Groupes, Formations, Matières & Salles
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                Gérer Cours, Absences, Examen & Notes
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                Gérer Actualités
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                Gérer Utilisateurs
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                Gérer Utilisateurs
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+            <h2></h2>
+
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

@@ -21,7 +21,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'security_login';
 
     private $urlGenerator;
     private $csrfTokenManager;
@@ -84,8 +84,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
-
-        return new RedirectResponse($this->urlGenerator->generate('accueil'));
+        return new RedirectResponse($this->urlGenerator->generate('security_post_login'));
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         // throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
     }

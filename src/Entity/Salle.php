@@ -20,7 +20,7 @@ class Salle
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=15)
      */
     private $numero;
 
@@ -97,5 +97,10 @@ class Salle
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return strval($this->getNumero());
     }
 }

@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-light {{ nav_bg|default("bg-primary") }} shadow-sm">
+    <a class="navbar-brand" href="#">{% block navbarBrand %}<i class="fas fa-compass"></i> EDT{% endblock %}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {% block nav_items %}
+            {% endblock %}
+        </ul>
+    </div>
+    <a class="btn btn-light" href="{{ path("security_logout") }}">Logout</a>
+</nav>
+
+{% block javascripts %}
+    <script src="https://kit.fontawesome.com/03b0271aa1.js" crossorigin="anonymous"></script>
+{% endblock %}
