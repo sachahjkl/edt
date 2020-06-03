@@ -1,6 +1,11 @@
-<div class="card mt-2">
+<div class="card mt-2 shadow">
+    {% if header is defined %}
+        <h5 class="card-header">{% block header %}{% endblock %}</h5>
+    {% endif %}
     <div class="card-body">
-        <h5 class="card-title">{% block title %}Carte{% endblock %}</h5>
+        {% if title is defined %}
+            <h5 class="card-title">{% block title %}{% endblock %}</h5>
+        {% endif %}
         <h6 class="card-subtitle mb-2 text-muted"></h6>
         <p class="card-text">
             {% block text %}

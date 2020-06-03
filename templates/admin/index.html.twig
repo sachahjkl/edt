@@ -2,11 +2,12 @@
 {% set accordion_id = "accordion_admin_services" %}
 {% set collapse_id = 1 %}
 
-{% block title %}{{ title|default("Accueil - Admin " ~ app.user.username ) }}{% endblock %}
+{% block title %}{{ parent() ~ " - " ~ title|default("Dashboard") }}{% endblock %}
 {% block body %}
     {% embed "user/_navbar.html.twig" with {nav_bg:"bg-danger"} %}
         {% block nav_brand %}
-            {{ parent() }} - Dashboard de {{ app.user.username }}
+            <span style="color: var(--red)">{{ parent() }}</span> <span
+                class="text-muted">Dashboard de {{ app.user.username }}</span>
         {% endblock %}
         {% block nav_items %}
             {{ parent() }}
@@ -14,13 +15,13 @@
     {% endembed %}
     {% embed "user/_container.html.twig" %}
         {% block container %}
-            {% embed "user/_card.html.twig" %}
-                {% block title %}Services disponible : {% endblock %}
+            {% embed "user/_card.html.twig" with {header:1} %}
+                {% block header %}Services disponible{% endblock %}
                 {% block text %}
                     <div class="accordion" id="{{ accordion_id }}">
                         {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
                             {% block button %}
-                                Gérer Utilisateurs
+                                <i class="fas fa-users"></i> Gérer Utilisateurs
                             {% endblock %}
                             {% block text %}
                             {% endblock %}
@@ -28,7 +29,7 @@
                         {% set collapse_id = collapse_id + 1 %}
                         {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
                             {% block button %}
-                                Gérer Groupes, Formations, Matières & Salles
+                                <i class="fas fa-users-cog"></i> Gérer Groupes
                             {% endblock %}
                             {% block text %}
                             {% endblock %}
@@ -36,7 +37,7 @@
                         {% set collapse_id = collapse_id + 1 %}
                         {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
                             {% block button %}
-                                Gérer Cours, Absences, Examen & Notes
+                                <i class="fas fa-brain"></i> Gérer Matières
                             {% endblock %}
                             {% block text %}
                             {% endblock %}
@@ -44,7 +45,7 @@
                         {% set collapse_id = collapse_id + 1 %}
                         {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
                             {% block button %}
-                                Gérer Actualités
+                                <i class="fas fa-chair"></i> Gérer Salles
                             {% endblock %}
                             {% block text %}
                             {% endblock %}
@@ -52,7 +53,8 @@
                         {% set collapse_id = collapse_id + 1 %}
                         {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
                             {% block button %}
-                                Gérer Utilisateurs
+                                <i class="fas fa-chalkboard-teacher"></i> Gérer Cours | <a
+                                    href="{{ path('admin_cours_index') }}">accéder</a>
                             {% endblock %}
                             {% block text %}
                             {% endblock %}
@@ -60,7 +62,47 @@
                         {% set collapse_id = collapse_id + 1 %}
                         {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
                             {% block button %}
-                                Gérer Utilisateurs
+                                <i class="fas fa-syringe"></i> Gérer Absences
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                <i class="fas fa-check"></i> Gérer Examens
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                <i class="fas fa-percent"></i> Gérer Notes
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                <i class="far fa-newspaper"></i> Gérer Actualités
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                <i class="fas fa-graduation-cap"></i> Gérer Formations
+                            {% endblock %}
+                            {% block text %}
+                            {% endblock %}
+                        {% endembed %}
+                        {% set collapse_id = collapse_id + 1 %}
+                        {% embed "user/_collapse.html.twig" with {parent: accordion_id,id: collapse_id} %}
+                            {% block button %}
+                                <i class="far fa-file-alt"></i> Gérer Documents
                             {% endblock %}
                             {% block text %}
                             {% endblock %}

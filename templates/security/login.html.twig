@@ -1,41 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connnexion{% endblock %}
+
+{% block title %}{{ parent() }} - Connnexion{% endblock %}
 
 {% block body %}
+    {{ include('imports/_font_awesome.html.twig') }}
     <div class="container">
-        <form method="post">
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
-
-            {% if app.user %}
-                <div class="mt-2">
-                    Vous êtes en tant que {{ app.user.username }}, <a
-                            href="{{ path('security_logout') }}">Déconnexion</a>
+        <div class="card shadow-lg mt-5 col-8 mx-auto">
+            <div class="card-body">
+                <div class="row">
+                    <h1 class="col display-4 text-center align-self-center"><i class="fas fa-compass"></i> Gestionnaire
+                        d'EDT</h1>
                 </div>
-            {% endif %}
 
-            <h1 class="h3 mt-2 font-weight-normal">Veuillez vous connecter</h1>
-            <label for="inputUsername">Nom d'utilisateur</label>
-            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
-                   required
-                   autofocus>
-            <label for="inputPassword">Mot de passe</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" required>
-
-            <input type="hidden" name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}"
-            >
-
-            <div class="custom-control custom-checkbox mt-2">
-                <input class="custom-control-input" type="checkbox" name="_remember_me" id="_remember_me">
-                <label class="custom-control-label" for="_remember_me"> Se souvenir de moi </label>
             </div>
+        </div>
+        <div class="jumbotron shadow-lg mt-5">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-            <button class="btn btn-lg btn-primary mt-2" type="submit">
-                Connexion
-            </button>
-        </form>
+                {% if app.user %}
+                    <div class="mt-2">
+                        Vous êtes en tant que {{ app.user.username }}, <a
+                                href="{{ path('security_logout') }}">Déconnexion</a>
+                    </div>
+                {% endif %}
+
+                <h1 class="h3 mt-2 font-weight-normal">Veuillez vous connecter</h1>
+                <hr class="m-y-md">
+                <label for="inputUsername">Nom d'utilisateur</label>
+                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
+                       required
+                       autofocus>
+                <small id="loginHelp" class="form-text text-muted">Ce login ne doit jamais être partagé.</small>
+                <label class="mt-2" for="inputPassword">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" required>
+
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+
+                <div class="custom-control custom-checkbox mt-2">
+                    <input class="custom-control-input" type="checkbox" name="_remember_me" id="_remember_me">
+                    <label class="custom-control-label" for="_remember_me"> Se souvenir de moi </label>
+                </div>
+
+                <button class="btn btn-lg btn-success mt-2" type="submit">
+                    Connexion
+                </button>
+            </form>
+        </div>
     </div>
 {% endblock %}

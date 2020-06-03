@@ -17,7 +17,7 @@ class AdminController extends AbstractController
 {
     /**
      * @Route("/dashboard",name="_index")
-     * @Route("/",name="_root")
+     * @Route("",name="_root")
      */
     public function index()
     {

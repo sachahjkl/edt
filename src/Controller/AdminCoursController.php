@@ -11,16 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/cours",name="cours")
+ * @Route("/admin/cours",name="admin_cours")
  */
-class CoursController extends AbstractController
+class AdminCoursController extends AbstractController
 {
     /**
-     * @Route("/", name="_index", methods={"GET"})
+     * @Route("", name="_index", methods={"GET"})
+     *
      */
     public function index(CoursRepository $coursRepository): Response
     {
-        return $this->render('cours/index.html.twig', [
+        return $this->render('admin/cours/index.html.twig', [
             'cours' => $coursRepository->findAll(),
         ]);
     }
@@ -42,7 +43,7 @@ class CoursController extends AbstractController
             return $this->redirectToRoute('cours_index');
         }
 
-        return $this->render('cours/new.html.twig', [
+        return $this->render('admin/cours/new.html.twig', [
             'cour' => $cour,
             'form' => $form->createView(),
         ]);
@@ -53,7 +54,7 @@ class CoursController extends AbstractController
      */
     public function show(Cours $cour): Response
     {
-        return $this->render('cours/show.html.twig', [
+        return $this->render('admin/cours/show.html.twig', [
             'cour' => $cour,
         ]);
     }
@@ -70,10 +71,10 @@ class CoursController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('cours_index');
+            return $this->redirectToRoute('admin_cours_index');
         }
 
-        return $this->render('cours/edit.html.twig', [
+        return $this->render('admin/cours/edit.html.twig', [
             'cour' => $cour,
             'form' => $form->createView(),
         ]);
@@ -90,6 +91,6 @@ class CoursController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('cours_index');
+        return $this->redirectToRoute('admin_cours_index');
     }
 }
