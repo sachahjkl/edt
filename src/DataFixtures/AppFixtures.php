@@ -12,25 +12,32 @@ use App\Entity\Salle;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     public function load(ObjectManager $manager)
     {
-
         /* Administrateurs */
 
-        $admin = new Administrateur();
-        $admin->setUsername("admin1")
-            ->setPassword('$argon2id$v=19$m=65536,t=4,p=1$akVHa0pXaG1sY25uTXdqQQ$oKL7vIQ90/s13VkR8eRRcLiUm50rlxGZiIlMFEFuM38');
-        $manager->persist($admin);
+        $admin1 = new Administrateur();
+        $admin1->setUsername("admin1")
+            ->setPassword($this->passwordEncoder->encodePassword($admin1, "password"));
+        $manager->persist($admin1);
 
         /* Professeurs */
         $prof1 = new Professeur();
         $prof1->setPrenom("Cédric")
             ->setNom("Du Mouza")
             ->setUsername("cedricdumouza")
-            ->setPassword('$argon2id$v=19$m=65536,t=4,p=1$dWRReVFVZnUxd3Bwb1BBTw$cOEzjtZVqNXIM44836hSyDa4/YzU8SMdGDAdaFim+M8') //"password"
+            ->setPassword($this->passwordEncoder->encodePassword($prof1, "password")) //"password"
             ->setDateNaissance(new DateTime("12 April 1976"));
         $manager->persist($prof1);
 
@@ -38,7 +45,7 @@ class AppFixtures extends Fixture
         $prof2->setPrenom("Faycal")
             ->setNom("Hamdi")
             ->setUsername("fayçalhamdi")
-            ->setPassword('$argon2id$v=19$m=65536,t=4,p=1$dWRReVFVZnUxd3Bwb1BBTw$cOEzjtZVqNXIM44836hSyDa4/YzU8SMdGDAdaFim+M8') //"password"
+            ->setPassword($this->passwordEncoder->encodePassword($prof2, "password")) //"password"
             ->setDateNaissance(new DateTime("15 May 1978"));
         $manager->persist($prof2);
         /* Formations */
@@ -73,7 +80,7 @@ class AppFixtures extends Fixture
 
         $eleve = new Eleve();
         $eleve->setUsername("sachafroment")
-            ->setPassword('$argon2id$v=19$m=65536,t=4,p=1$TXpxNEkvdTR5TGZZTUxKTQ$EdfX8q5y/fk5KWgsxATWMQSnGRkUfw863LKxbMOJa3Q') //"password"
+            ->setPassword($this->passwordEncoder->encodePassword($eleve, "password")) //"password"
             ->setPrenom("Sacha")
             ->setNom("Froment")
             ->setDateNaissance(new DateTime("25 May 1999"))
@@ -82,7 +89,7 @@ class AppFixtures extends Fixture
 
         $eleve = new Eleve();
         $eleve->setUsername("sivaajithansivathevan")
-            ->setPassword('$argon2id$v=19$m=65536,t=4,p=1$TXpxNEkvdTR5TGZZTUxKTQ$EdfX8q5y/fk5KWgsxATWMQSnGRkUfw863LKxbMOJa3Q') //"password"
+            ->setPassword($this->passwordEncoder->encodePassword($eleve, "password")) //"password"
             ->setPrenom("Sivaajithan")
             ->setNom("Sivathevan")
             ->setDateNaissance(new DateTime("8 June 1999"))

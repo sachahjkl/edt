@@ -1,0 +1,100 @@
+easy_admin:
+  site_name: "Gestion d'EDT"
+  design:
+    assets:
+      favicon: '/images/favicon.ico'
+
+  user:
+    name_property_path: 'username'
+    avatar_property_path  : 'avatar_uri'
+  entities:
+    # List the entity class name you want to manage
+    Absence:
+      label: Absence
+      class: App\Entity\Absence
+    Actualite:
+      label: Actualité
+      class: App\Entity\Actualite
+    Administrateur:
+      label: Administrateur
+      class: App\Entity\Administrateur
+      controller: App\Controller\EasyAdminUtilisateurController
+      form:
+        fields:
+          - username
+          - { property: 'plainPassword', type: 'password', label: "Mot de passe", type_options: { required: true }}
+          - { property: 'profile_picture_file', type: 'vich_image', label: "Image de profil", base_path: "%profile_pictures%"}
+      list:
+        fields:
+          - id
+          - username
+          - { property: 'profile_picture_path', type: 'image', label: "Image de profil", base_path: "%profile_pictures%"}
+          - roles
+    Cours:
+      label: Cours
+      class: App\Entity\Cours
+    Document:
+      label: Document
+      class: App\Entity\Document
+    Eleve:
+      label: Élève
+      class: App\Entity\Eleve
+      controller: App\Controller\EasyAdminUtilisateurController
+      form:
+        fields:
+          - username
+          - { property: 'plainPassword', type: 'password', label: "Mot de passe", type_options: { required: true }}
+          - { property: 'prenom', label: "Prénom"}
+          - nom
+          - groupe
+          - { property: 'date_naissance', label: "Date de naissance", type: 'birthday', type_options: { widget: 'single_text' }}
+          - { property: 'profile_picture_file', type: 'vich_image', label: "Image de profil", base_path: "%profile_pictures%"}
+          - documents
+      list:
+        #        collapse_actions: true
+        actions: ["show","edit","delete"]
+        batch_actions: ["delete"]
+        fields:
+          - id
+          - username
+          - nom
+          - prenom
+          - date_naissance
+          - { property: 'profile_picture_path', type: 'image', label: "Image de profil", base_path: "%profile_pictures%"}
+      show:
+        fields:
+          - username
+          - nom
+          - prenom
+          - date_naissance
+          - { property: 'profile_picture_path', type: 'image', label: "Image de profil", base_path: "%profile_pictures%"}
+          - notes
+      edit:
+        fields:
+          - "-id"
+
+    Examen:
+      label: Examen
+      class: App\Entity\Examen
+    Formation:
+      label: Formation
+      class: App\Entity\Formation
+    Groupe:
+      label: Groupe
+      class: App\Entity\Groupe
+    Matiere:
+      label: Matière
+      class: App\Entity\Matiere
+    Note:
+      label: Note
+      class: App\Entity\Note
+    Professeur:
+      label: Professeur
+      class: App\Entity\Professeur
+      controller: App\Controller\EasyAdminUtilisateurController
+      form:
+        fields:
+          - {property: 'date_naissance', label: "Date de naissance", type: 'birthday', type_options: { widget: 'single_text' }}
+    Salle:
+      label: Salle
+      class: App\Entity\Salle

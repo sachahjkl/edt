@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PersonneRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,11 +34,6 @@ abstract class Personne extends Utilisateur
      * @ORM\Column(type="date")
      */
     private $date_naissance;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $profile_picture_path;
 
     /**
      * @ORM\OneToMany(targetEntity=Document::class, mappedBy="proprietaire", orphanRemoval=true)
@@ -73,26 +69,14 @@ abstract class Personne extends Utilisateur
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeInterface
+    public function getDateNaissance(): ?DateTimeInterface
     {
         return $this->date_naissance;
     }
 
-    public function setDateNaissance(\DateTimeInterface $date_naissance): self
+    public function setDateNaissance(DateTimeInterface $date_naissance): self
     {
         $this->date_naissance = $date_naissance;
-
-        return $this;
-    }
-
-    public function getProfilePicturePath(): ?string
-    {
-        return $this->profile_picture_path;
-    }
-
-    public function setProfilePicturePath(?string $profile_picture_path): self
-    {
-        $this->profile_picture_path = $profile_picture_path;
 
         return $this;
     }
@@ -134,4 +118,10 @@ abstract class Personne extends Utilisateur
         $roles[] = 'ROLE_PERSON';
         return array_unique($roles);
     }
+
+    public function __toString()
+    {
+        return strval($this->getPrenom() . " " . strtoupper($this->getNom()));
+    }
+
 }

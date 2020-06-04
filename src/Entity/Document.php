@@ -90,4 +90,9 @@ class Document
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return strval($this->getTitre());
+    }
 }

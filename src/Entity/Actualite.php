@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ActualiteRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,12 +68,12 @@ class Actualite
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getDateCreation(): ?DateTimeInterface
     {
         return $this->date_creation;
     }
 
-    public function setDateCreation(\DateTimeInterface $date_creation): self
+    public function setDateCreation(DateTimeInterface $date_creation): self
     {
         $this->date_creation = $date_creation;
 
@@ -89,5 +90,10 @@ class Actualite
         $this->auteur = $auteur;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return strval($this->getTitre());
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200602125408 extends AbstractMigration
+final class Version20200603194900 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -37,7 +37,7 @@ final class Version20200602125408 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_765AE0C97ECF78B0 ON absence (cours_id)');
         $this->addSql('CREATE TABLE actualite (id INT NOT NULL, auteur_id INT NOT NULL, titre VARCHAR(255) NOT NULL, contenu TEXT NOT NULL, date_creation DATE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_5492819760BB6FE6 ON actualite (auteur_id)');
-        $this->addSql('CREATE TABLE utilisateur (id INT NOT NULL, username VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE utilisateur (id INT NOT NULL, username VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, profile_picture_path VARCHAR(255) DEFAULT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_1D1C63B3F85E0677 ON utilisateur (username)');
         $this->addSql('CREATE TABLE administrateur (id INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE cours (id INT NOT NULL, salle_id INT NOT NULL, matiere_id INT NOT NULL, professeur_id INT NOT NULL, groupe_id INT NOT NULL, debut TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, fin TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, devoirs TEXT DEFAULT NULL, statut BOOLEAN NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
@@ -47,7 +47,7 @@ final class Version20200602125408 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_FDCA8C9C7A45358C ON cours (groupe_id)');
         $this->addSql('CREATE TABLE document (id INT NOT NULL, proprietaire_id INT NOT NULL, titre VARCHAR(255) NOT NULL, file_path VARCHAR(255) NOT NULL, partage BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_D8698A7676C50E4A ON document (proprietaire_id)');
-        $this->addSql('CREATE TABLE personne (id INT NOT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, date_naissance DATE NOT NULL, profile_picture_path VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE personne (id INT NOT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, date_naissance DATE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE eleve (id INT NOT NULL, groupe_id INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_ECA105F77A45358C ON eleve (groupe_id)');
         $this->addSql('CREATE TABLE examen (id INT NOT NULL, coefficient DOUBLE PRECISION NOT NULL, note_max DOUBLE PRECISION NOT NULL, PRIMARY KEY(id))');

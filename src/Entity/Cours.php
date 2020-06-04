@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CoursRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -84,24 +85,24 @@ class Cours
         return $this->id;
     }
 
-    public function getDebut(): ?\DateTimeInterface
+    public function getDebut(): ?DateTimeInterface
     {
         return $this->debut;
     }
 
-    public function setDebut(\DateTimeInterface $debut): self
+    public function setDebut(DateTimeInterface $debut): self
     {
         $this->debut = $debut;
 
         return $this;
     }
 
-    public function getFin(): ?\DateTimeInterface
+    public function getFin(): ?DateTimeInterface
     {
         return $this->fin;
     }
 
-    public function setFin(\DateTimeInterface $fin): self
+    public function setFin(DateTimeInterface $fin): self
     {
         $this->fin = $fin;
 
@@ -209,5 +210,11 @@ class Cours
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+//        return strval($this->getMatiere() . " - " . $this->getSalle());
+        return strval($this->getId());
     }
 }

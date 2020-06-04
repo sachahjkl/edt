@@ -59,5 +59,6 @@ class Administrateur extends Utilisateur
         $roles[] = 'ROLE_ADMIN';
         return array_unique($roles);
     }
-    
+
+
 }

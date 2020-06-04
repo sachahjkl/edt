@@ -29,7 +29,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login", name="_login")
+     * @Route("login", name="_login")
      *
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -47,12 +47,12 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/post_login", name="_post_login")
+     * @Route("post_login", name="_post_login")
      */
     public function post_login()
     {
         if ($this->isGranted("ROLE_ADMIN")) {
-            return $this->redirect($this->generateUrl("admin_index"));
+            return $this->redirect($this->generateUrl("easyadmin"));
         } elseif ($this->isGranted("ROLE_PERSONNE")) {
             return $this->redirect($this->generateUrl("personne_index"));
         } else {
@@ -62,7 +62,7 @@ class SecurityController extends AbstractController
 
 
     /**
-     * @Route("/logout", name="_logout")
+     * @Route("logout", name="_logout")
      */
     public function logout()
     {
