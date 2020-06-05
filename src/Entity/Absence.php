@@ -18,14 +18,14 @@ class Absence
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $motif;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $statut;
+    private $statut = true;
 
     /**
      * @ORM\ManyToOne(targetEntity=Eleve::class, inversedBy="absences")

@@ -1,0 +1,5 @@
+<dl>
+    {% for document in value %}
+        <dt>{% embed "document/easy_admin_document.html.twig" with {document: document} %}{% endembed %}</dt>
+    {% endfor %}
+</dl>

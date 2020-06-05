@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ActualiteRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,6 +39,11 @@ class Actualite
      * @ORM\JoinColumn(nullable=false)
      */
     private $auteur;
+
+    public function __construct()
+    {
+        $this->date_creation = new DateTime();
+    }
 
     public function getId(): ?int
     {

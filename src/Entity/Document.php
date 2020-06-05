@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\DocumentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=DocumentRepository::class)
+ * @Vich\Uploadable
  */
 class Document
 {
@@ -26,6 +29,12 @@ class Document
      * @ORM\Column(type="string", length=255)
      */
     private $file_path;
+
+    /**
+     * @Vich\UploadableField(mapping="personne_files", fileNameProperty="file_path")
+     * @var File
+     */
+    private $file;
 
     /**
      * @ORM\Column(type="boolean")
@@ -60,7 +69,7 @@ class Document
         return $this->file_path;
     }
 
-    public function setFilePath(string $file_path): self
+    public function setFilePath($file_path): self
     {
         $this->file_path = $file_path;
 
@@ -94,5 +103,24 @@ class Document
     public function __toString()
     {
         return strval($this->getTitre());
+    }
+
+    /**
+     * @return File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File $file
+     */
+    public function setFile(?File $file = null): void
+    {
+        $this->file = $file;
+        if ($file) {
+            $this->file_path = $this->file_path . "";
+        }
     }
 }

@@ -4,8 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    uploads_path: '/uploads/images'
-    profile_pictures: '%uploads_path%/profile_pictures'
+    uploads_path: '/uploads'
+    uploads_path_images: '%uploads_path%/images'
+    profile_pictures: '%uploads_path_images%/profile_pictures'
     documents: '%uploads_path%/documents'
 
 services:
@@ -28,3 +29,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Naming\:
+        resource: '../src/Naming'
+        public: true

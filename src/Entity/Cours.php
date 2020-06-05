@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\CoursRepository;
+use DateInterval;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CoursRepository::class)
@@ -33,6 +36,7 @@ class Cours
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan(propertyPath="debut")
      */
     private $fin;
 
@@ -44,7 +48,7 @@ class Cours
     /**
      * @ORM\Column(type="boolean")
      */
-    private $statut;
+    private $statut = true;
 
     /**
      * @ORM\ManyToOne(targetEntity=Salle::class, inversedBy="cours")
@@ -78,6 +82,10 @@ class Cours
     public function __construct()
     {
         $this->absences = new ArrayCollection();
+        $this->debut = new DateTime();
+        $fin= clone $this->debut;
+        date_add($fin, new DateInterval("PT1H30M"));
+        $this->fin = $fin;
     }
 
     public function getId(): ?int

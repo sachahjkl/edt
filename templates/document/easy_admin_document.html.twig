@@ -1,0 +1,9 @@
+{% if document is defined %}
+    <a href="{{ documents }}/{{ document.filepath }}"><i class="far fa-file-alt"></i> Télécharger document
+        <b>{{ document.titre }}</b></a>
+{% elseif value is defined %}
+    <a href="{{ documents }}/{{ value }}"><i class="far fa-file-alt"></i> Télécharger document
+    </a>
+{% endif %}
+
+{{ include('imports/_font_awesome.html.twig') }}

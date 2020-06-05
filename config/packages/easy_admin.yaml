@@ -2,99 +2,331 @@ easy_admin:
   site_name: "Gestion d'EDT"
   design:
     assets:
-      favicon: '/images/favicon.ico'
+      favicon: "/images/favicon.ico"
+    form_theme:
+      - '@EasyAdmin/form/bootstrap_4.html.twig'
+      - '@VichUploader/Form/fields.html.twig'
 
   user:
-    name_property_path: 'username'
-    avatar_property_path  : 'avatar_uri'
+    name_property_path: "username"
+    avatar_property_path: "avatar_uri"
   entities:
     # List the entity class name you want to manage
     Absence:
-      label: Absence
       class: App\Entity\Absence
+      form:
+        title: "Enregistrer l'absence d'un élève"
+        fields:
+          - { type: 'group', label: "Informations sur l'absence" }
+          - absent
+          - {property: "cours", required: true}
+          - {property: "motif", type: "text_editor"}
+          - {property: "statut", label: "Validité de l'absence"}
+      list:
+        batch_actions: ["delete"]
+        title: "Absences des élèves"
+        fields:
+          - id
+          - absent
+          - {property: "statut", label: "Validité de l'absence"}
+          - {property: "cours", required: true}
+          - {property: "motif"}
+      show:
+        title: "Résumé de l'absence n°%%entity_id%%"
     Actualite:
       label: Actualité
       class: App\Entity\Actualite
+      form:
+        title: "Rédaction d'une actualité"
+        fields:
+          - auteur
+          - titre
+          - contenu
+      show:
+        title: "Résumé de l'actualité n°%%entity_id%%"
+      list:
+        batch_actions: ["delete"]
+        title: "Liste des actualités"
     Administrateur:
-      label: Administrateur
       class: App\Entity\Administrateur
       controller: App\Controller\EasyAdminUtilisateurController
       form:
+        title: "Gestion d'un administrateur"
         fields:
+          - { type: 'group', label: "Informations sur l'administrateur" }
           - username
-          - { property: 'plainPassword', type: 'password', label: "Mot de passe", type_options: { required: true }}
-          - { property: 'profile_picture_file', type: 'vich_image', label: "Image de profil", base_path: "%profile_pictures%"}
+          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
+          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%"}
       list:
+        batch_actions: ["delete"]
+        title: "Liste des administrateurs"
         fields:
           - id
           - username
-          - { property: 'profile_picture_path', type: 'image', label: "Image de profil", base_path: "%profile_pictures%"}
+          - { property: "profile_picture_path", type: "image", label: "Image de profil", base_path: "%profile_pictures%"}
           - roles
+      show:
+        title: "Résumé de l'administrateur n°%%entity_id%%"
+        fields:
+          - { property: "profile_picture_path", type: "image", label: "Portrait", base_path: "%profile_pictures%"}
+          - username
     Cours:
-      label: Cours
       class: App\Entity\Cours
+      form:
+        title: "Enregistrer un cours"
+        fields:
+          - { type: 'group', label: "Informations sur le cours", columns: 6 }
+          - {property: "statut", label: "Actif", type_options: {empty_data: "true"}}
+          - professeur
+          - groupe
+          - {property: "matiere", label: "Matière"}
+          - salle
+          - { type: 'group', label: "Informations sur l'horaire", columns: 6 }
+          - {property: "debut", label: "Début"}
+          - fin
+          - { type: 'group', label: 'Devoirs'}
+          - { property: 'devoirs', label: 'Saisie des devoirs'}
+      show:
+        title: "Résumé du cours n°%%entity_id%%"
+        fields:
+          - professeur
+          - matiere
+          - statut
+          - salle
+          - groupe
+          - debut
+          - fin
+          - devoirs
+      list:
+        batch_actions: ["delete"]
+        title: "Liste des cours"
+        fields:
+          - id
+          - professeur
+          - matiere
+          - statut
+          - salle
+          - groupe
+          - debut
+          - fin
     Document:
-      label: Document
       class: App\Entity\Document
+      form:
+        title: "Ajout d'un document"
+        fields:
+          - { type: 'group', label: "Informations sur le document"}
+          - titre
+          - proprietaire
+          - partage
+          - { property: 'file', type: 'file', base_path: "%documents%"}
+      list:
+        batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
+        title: "Liste des documents"
+      show:
+        title: "Résumé du document n°%%entity_id%%"
+        fields:
+          - titre
+          - proprietaire
+          - partage
+          - {property: filepath, label: "Lien", template: "document/easy_admin_document.html.twig"}
     Eleve:
       label: Élève
       class: App\Entity\Eleve
       controller: App\Controller\EasyAdminUtilisateurController
       form:
+        title: "Gestion d'un élève"
         fields:
           - username
-          - { property: 'plainPassword', type: 'password', label: "Mot de passe", type_options: { required: true }}
-          - { property: 'prenom', label: "Prénom"}
+          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
+          - { property: "prenom", label: "Prénom"}
           - nom
           - groupe
-          - { property: 'date_naissance', label: "Date de naissance", type: 'birthday', type_options: { widget: 'single_text' }}
-          - { property: 'profile_picture_file', type: 'vich_image', label: "Image de profil", base_path: "%profile_pictures%"}
+          - { property: "date_naissance", label: "Date de naissance", type: "birthday", type_options: { widget: "single_text" }}
+          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%"}
           - documents
       list:
-        #        collapse_actions: true
-        actions: ["show","edit","delete"]
         batch_actions: ["delete"]
+        title: "Liste des élèves"
+        actions: ["show","edit","delete"]
         fields:
           - id
           - username
           - nom
           - prenom
           - date_naissance
-          - { property: 'profile_picture_path', type: 'image', label: "Image de profil", base_path: "%profile_pictures%"}
+          - { property: "profile_picture_path", type: "image", label: "Image de profil", base_path: "%profile_pictures%"}
       show:
+        title: "Résumé de l'élève n°%%entity_id%%"
         fields:
           - username
           - nom
           - prenom
           - date_naissance
-          - { property: 'profile_picture_path', type: 'image', label: "Image de profil", base_path: "%profile_pictures%"}
+          - { property: "profile_picture_path", type: "image", label: "Image de profil", base_path: "%profile_pictures%"}
           - notes
-      edit:
-        fields:
-          - "-id"
-
+          - absences
+          - {property: documents, template: "document/easy_admin_documents.html.twig"}
     Examen:
-      label: Examen
       class: App\Entity\Examen
+      form:
+        title: "Enregistrer un examens"
+        fields:
+          - { type: 'group', label: "Informations sur l'examen", columns: 6 }
+          - {property: "statut", label: "Actif", type_options: {empty_data: "true"}}
+          - professeur
+          - groupe
+          - {property: "matiere", label: "Matière"}
+          - salle
+          - { type: 'group', label: "Informations sur l'horaire", columns: 6 }
+          - {property: "debut", label: "Début"}
+          - fin
+          - { type: 'group', label: "Informations sur les note" }
+          - coefficient
+          - note_max
+          - notes
+      show:
+        title: "Résumé de l'examen n°%%entity_id%%"
+        fields:
+          - professeur
+          - matiere
+          - statut
+          - salle
+          - groupe
+          - debut
+          - fin
+          - coefficient
+          - note_max
+          - notes
+      list:
+        batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
+        title: "Liste des examens"
+        fields:
+          - id
+          - professeur
+          - matiere
+          - statut
+          - coefficient
+          - note_max
+          - debut
+          - fin
     Formation:
-      label: Formation
       class: App\Entity\Formation
+      form:
+        title: "Gestion d'une formations"
+        fields:
+          - {property: "intitule", label: "Intitulé"}
+          - responsable
+          - {property: "duree_annees", label: "Nombres d'années de la formation"}
+          - groupes
+
+      show:
+        title: "Résumé de la formation n°%%entity_id%%"
+      list:
+        batch_actions: ["delete"]
+        title: "Liste des formations"
     Groupe:
-      label: Groupe
       class: App\Entity\Groupe
+      form:
+        title: "Gestion d'un groupe"
+        fields:
+          - { type: 'group', label: 'Informations du groupe' }
+          - nom
+          - formation
+          - {property: eleves, label: "Élèves"}
+      show:
+        title: "Résumé du groupe n°%%entity_id%%"
+        fields:
+          - nom
+          - formation
+          - {property: eleves, label: Élève(s)}
+      list:
+        batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
+        title: "Liste des groupes"
     Matiere:
-      label: Matière
+      label: "Matière"
       class: App\Entity\Matiere
+      form:
+        title: "Gestion d'une matière"
+      show:
+        title: "Résumé de la matière n°%%entity_id%%"
+        fields:
+          - { property: intitule, label: "Intitulé"}
+          - { property: credits_ects, label: "Crédits ECTS"}
+          - responsable
+          - {property: professeurs, label: "Professeurs enseignants"}
+      list:
+        batch_actions: ["delete"]
+        title: "Liste des matières"
     Note:
-      label: Note
       class: App\Entity\Note
+      form:
+        title: "Gestion d'une note"
+        fields:
+          - {property: eleve, label: "Élève"}
+          - examen
+          - note
+      show:
+        title: "Résumé de la note n°%%entity_id%%"
+        fields:
+          - {property: eleve, label: "Élève"}
+          - examen
+          - note
+      list:
+        batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
+        title: "Liste des notes"
+        fields:
+          - id
+          - {property: eleve, label: "Élève"}
+          - examen
+          - note
     Professeur:
-      label: Professeur
       class: App\Entity\Professeur
       controller: App\Controller\EasyAdminUtilisateurController
       form:
+        title: "Gestion d'un professseur"
         fields:
-          - {property: 'date_naissance', label: "Date de naissance", type: 'birthday', type_options: { widget: 'single_text' }}
+          - { type: 'group', label: 'Informations personnelles' }
+          - username
+          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
+          - { property: "prenom", label: "Prénom"}
+          - nom
+          - { property: "date_naissance", label: "Date de naissance", type: "birthday", type_options: { widget: "single_text" }}
+          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%"}
+          - { type: 'group', label: "Informations d'enseignant" }
+          - { property: "matiere_responsable", label: "Matière reponsable"}
+          - formation_responsable
+          - { property: "matieres", label: "Matières enseignées"}
+      list:
+        batch_actions: ["delete"]
+        title: "Liste des professeurs"
+        actions: ["show","edit","delete"]
+      show:
+        title: "Résumé du professeur n°%%entity_id%%"
+        fields:
+          - { property: "profile_picture_path", type: "image", label: "Portrait", base_path: "%profile_pictures%"}
+          - username
+          - { property: "prenom", label: "Prénom"}
+          - nom
+          - { property: "date_naissance", label: "Date de naissance"}
+          - { property: "matiere_responsable", label: "Matière reponsable"}
+          - formation_responsable
+          - {property: "matieres", label: "Matières enseignées"}
+          - {property: documents, template: "document/easy_admin_documents.html.twig"}
     Salle:
-      label: Salle
       class: App\Entity\Salle
+      form:
+        title: "Gestion d'une salle"
+      show:
+        title: "Résumé de la salle n°%%entity_id%%"
+        fields:
+          - id
+          - {property: numero, label: "Numéro de salle"}
+          - {property: capacite, label: "Capacité assise"}
+      list:
+        batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
+        title: "Liste des salles"

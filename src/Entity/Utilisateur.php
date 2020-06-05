@@ -58,7 +58,7 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     /**
      * @Vich\UploadableField(mapping="personne_profile_pictures", fileNameProperty="profile_picture_path")
-     * @var
+     * @var File
      */
     private $profile_picture_file;
 
@@ -159,7 +159,7 @@ abstract class Utilisateur implements UserInterface, Serializable
     }
 
     /**
-     * @return mixed
+     * @return File
      */
     public function getProfilePictureFile()
     {
@@ -167,7 +167,7 @@ abstract class Utilisateur implements UserInterface, Serializable
     }
 
     /**
-     * @param mixed $profile_picture_file
+     * @param File $profile_picture_file
      */
     public function setProfilePictureFile(File $profile_picture_file = null): void
     {
@@ -192,9 +192,9 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     public function getAvatarUri(): ?string
     {
-        if($this->getProfilePicturePath()) {
+        if ($this->getProfilePicturePath()) {
             return "/uploads/images/profile_pictures/" . $this->getProfilePicturePath();
-        }else{
+        } else {
             return null;
         }
     }

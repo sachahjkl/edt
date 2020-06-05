@@ -6,6 +6,7 @@ use App\Repository\ExamenRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ExamenRepository::class)
@@ -15,11 +16,13 @@ class Examen extends Cours
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\PositiveOrZero
      */
     private $coefficient;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Positive
      */
     private $note_max;
 

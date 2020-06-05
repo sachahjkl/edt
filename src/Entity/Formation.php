@@ -6,6 +6,7 @@ use App\Repository\FormationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FormationRepository::class)
@@ -26,6 +27,7 @@ class Formation
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\Positive
      */
     private $duree_annees;
 
@@ -44,6 +46,7 @@ class Formation
     public function __construct()
     {
         $this->groupes = new ArrayCollection();
+        $this->duree_annees = 1;
     }
 
     public function getId(): ?int
