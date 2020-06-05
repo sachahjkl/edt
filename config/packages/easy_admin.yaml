@@ -1,17 +1,52 @@
 easy_admin:
   site_name: "Gestion d'EDT"
+  formats:
+    date: 'd/m/Y'
+    datetime: 'd/m/Y H:i'
   design:
+    brand_color: '#5c70d6'
     assets:
       favicon: "/images/favicon.ico"
     form_theme:
       - '@EasyAdmin/form/bootstrap_4.html.twig'
       - '@VichUploader/Form/fields.html.twig'
-
+    menu:
+      - { label: 'Utilisateurs' }
+      - { label: "Admin", icon: "user-cog", children: [ Utilisateur, Administrateur, Actualite, Document]}
+      - { entity: "Professeur", icon: "chalkboard-teacher"}
+      - { entity: "Eleve", icon: "user-graduate"}
+      - { label: 'Cours' }
+      - { entity: "Cours", icon: "pen-fancy"}
+      - { entity: "Salle", icon: "chair"}
+      - { entity: "Matiere", icon: "brain"}
+      - { entity: "Examen", icon: "check"}
+      - { entity: "Note", icon: "percent"}
+      - { entity: "Absence", icon: "syringe"}
+      - { label: "Formation"}
+      - {entity: "Formation", icon: "graduation-cap"}
+      - {entity: "Groupe", icon: "users"}
   user:
     name_property_path: "username"
     avatar_property_path: "avatar_uri"
   entities:
     # List the entity class name you want to manage
+    Utilisateur:
+      class: App\Entity\Utilisateur
+      icon: 'user'
+      controller: App\Controller\EasyAdminUtilisateurController
+      label: "Mots de passe"
+      form:
+        title: "Mise à jour du mot de passe de l'utilisateur n°%%entity_id%%"
+        fields:
+          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
+      list:
+        actions: ["edit","-delete", "-new"]
+        title: "Utilisateurs disponibles"
+        fields:
+          - id
+          - username
+
+
     Absence:
       class: App\Entity\Absence
       form:
@@ -24,6 +59,7 @@ easy_admin:
           - {property: "statut", label: "Validité de l'absence"}
       list:
         batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
         title: "Absences des élèves"
         fields:
           - id
@@ -46,19 +82,19 @@ easy_admin:
         title: "Résumé de l'actualité n°%%entity_id%%"
       list:
         batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
         title: "Liste des actualités"
     Administrateur:
       class: App\Entity\Administrateur
-      controller: App\Controller\EasyAdminUtilisateurController
       form:
         title: "Gestion d'un administrateur"
         fields:
           - { type: 'group', label: "Informations sur l'administrateur" }
           - username
-          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
           - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%"}
       list:
         batch_actions: ["delete"]
+        actions: ['show', 'edit', 'delete']
         title: "Liste des administrateurs"
         fields:
           - id
@@ -99,6 +135,7 @@ easy_admin:
           - devoirs
       list:
         batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
         title: "Liste des cours"
         fields:
           - id
@@ -133,12 +170,10 @@ easy_admin:
     Eleve:
       label: Élève
       class: App\Entity\Eleve
-      controller: App\Controller\EasyAdminUtilisateurController
       form:
         title: "Gestion d'un élève"
         fields:
           - username
-          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
           - { property: "prenom", label: "Prénom"}
           - nom
           - groupe
@@ -166,6 +201,7 @@ easy_admin:
           - { property: "profile_picture_path", type: "image", label: "Image de profil", base_path: "%profile_pictures%"}
           - notes
           - absences
+          - groupe
           - {property: documents, template: "document/easy_admin_documents.html.twig"}
     Examen:
       class: App\Entity\Examen
@@ -220,11 +256,16 @@ easy_admin:
           - responsable
           - {property: "duree_annees", label: "Nombres d'années de la formation"}
           - groupes
-
       show:
         title: "Résumé de la formation n°%%entity_id%%"
+        fields:
+          - {property: "intitule", label: "Intitulé"}
+          - responsable
+          - {property: "duree_annees", label: "Nombres d'années de la formation"}
+          - groupes
       list:
         batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
         title: "Liste des formations"
     Groupe:
       class: App\Entity\Groupe
@@ -259,6 +300,7 @@ easy_admin:
           - {property: professeurs, label: "Professeurs enseignants"}
       list:
         batch_actions: ["delete"]
+        actions: ["show","edit","delete"]
         title: "Liste des matières"
     Note:
       class: App\Entity\Note
@@ -268,12 +310,15 @@ easy_admin:
           - {property: eleve, label: "Élève"}
           - examen
           - note
+          - {property: "examen.note_max", label: "Note maximum", type: "text", type_options: { disabled: true }}
       show:
         title: "Résumé de la note n°%%entity_id%%"
         fields:
           - {property: eleve, label: "Élève"}
           - examen
           - note
+          - {property: "examen.note_max", label: "Note maximum", type: "text"}
+
       list:
         batch_actions: ["delete"]
         actions: ["show","edit","delete"]
@@ -283,15 +328,14 @@ easy_admin:
           - {property: eleve, label: "Élève"}
           - examen
           - note
+          - {property: "examen.note_max", label: "Note maximum"}
     Professeur:
       class: App\Entity\Professeur
-      controller: App\Controller\EasyAdminUtilisateurController
       form:
         title: "Gestion d'un professseur"
         fields:
           - { type: 'group', label: 'Informations personnelles' }
           - username
-          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
           - { property: "prenom", label: "Prénom"}
           - nom
           - { property: "date_naissance", label: "Date de naissance", type: "birthday", type_options: { widget: "single_text" }}

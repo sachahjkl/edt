@@ -21,6 +21,7 @@ class Note
     /**
      * @ORM\Column(type="float")
      * @Assert\PositiveOrZero
+     * @Assert\LessThanOrEqual(propertyPath="examen.note_max")
      */
     private $note;
 

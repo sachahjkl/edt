@@ -6,6 +6,7 @@ use App\Repository\CoursRepository;
 use DateInterval;
 use DateTime;
 use DateTimeInterface;
+use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -82,8 +83,8 @@ class Cours
     public function __construct()
     {
         $this->absences = new ArrayCollection();
-        $this->debut = new DateTime();
-        $fin= clone $this->debut;
+        $this->debut = new DateTime("now", new DateTimeZone("Europe/Paris"));
+        $fin = clone $this->debut;
         date_add($fin, new DateInterval("PT1H30M"));
         $this->fin = $fin;
     }
