@@ -85,7 +85,8 @@ easy_admin:
         title: "Liste des actualités"
     Administrateur:
       class: App\Entity\Administrateur
-      form:
+      controller: App\Controller\EasyAdminUtilisateurController
+      edit:
         title: "Gestion d'un administrateur"
         fields:
           - { type: 'group', label: "Informations sur l'administrateur" }
@@ -100,6 +101,13 @@ easy_admin:
           - username
           - { property: "profile_picture_path", type: "image", label: "Image de profil", base_path: "%profile_pictures%"}
           - roles
+      new:
+        title: "Gestion d'un administrateur"
+        fields:
+          - { type: 'group', label: "Informations sur l'administrateur" }
+          - username
+          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
+          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%"}
       show:
         title: "Résumé de l'administrateur n°%%entity_id%%"
         fields:
@@ -169,10 +177,24 @@ easy_admin:
     Eleve:
       label: Élève
       class: App\Entity\Eleve
-      form:
+      controller: App\Controller\EasyAdminUtilisateurController
+      edit:
         title: "Gestion d'un élève"
         fields:
+          - { type: 'group', label: "Informations sur l'élève"}
           - username
+          - { property: "prenom", label: "Prénom"}
+          - nom
+          - groupe
+          - { property: "date_naissance", label: "Date de naissance", type: "birthday", type_options: { widget: "single_text" }}
+          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%"}
+          - documents
+      new:
+        title: "Gestion d'un élève"
+        fields:
+          - { type: 'group', label: "Informations sur l'élève"}
+          - username
+          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
           - { property: "prenom", label: "Prénom"}
           - nom
           - groupe
@@ -186,8 +208,8 @@ easy_admin:
         fields:
           - id
           - username
+          - { property: "prenom", label: "Prénom"}
           - nom
-          - prenom
           - date_naissance
           - { property: "profile_picture_path", type: "image", label: "Image de profil", base_path: "%profile_pictures%"}
       show:
@@ -202,6 +224,7 @@ easy_admin:
           - absences
           - groupe
           - {property: documents, template: "document/easy_admin_documents.html.twig"}
+
     Examen:
       class: App\Entity\Examen
       form:
@@ -330,7 +353,8 @@ easy_admin:
           - {property: "examen.note_max", label: "Note maximum"}
     Professeur:
       class: App\Entity\Professeur
-      form:
+      controller: App\Controller\EasyAdminUtilisateurController
+      edit:
         title: "Gestion d'un professseur"
         fields:
           - { type: 'group', label: 'Informations personnelles' }
@@ -343,10 +367,31 @@ easy_admin:
           - { property: "matiere_responsable", label: "Matière reponsable"}
           - formation_responsable
           - { property: "matieres", label: "Matières enseignées"}
+      new:
+        title: "Gestion d'un professseur"
+        fields:
+          - { type: 'group', label: 'Informations personnelles' }
+          - username
+          - { property: "plainPassword", type: "password", label: "Mot de passe", type_options: { required: true }}
+          - { property: "prenom", label: "Prénom"}
+          - nom
+          - { property: "date_naissance", label: "Date de naissance", type: "birthday", type_options: { widget: "single_text" }}
+          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%"}
+          - { type: 'group', label: "Informations d'enseignant" }
+          - { property: "matiere_responsable", label: "Matière reponsable"}
+          - formation_responsable
+          - { property: "matieres", label: "Matières enseignées"}
       list:
         batch_actions: ["delete"]
         title: "Liste des professeurs"
         actions: ["show","edit","delete"]
+        fields:
+          - id
+          - username
+          - { property: "prenom", label: "Prénom"}
+          - nom
+          - date_naissance
+          - { property: "profile_picture_path", type: "image", label: "Image de profil", base_path: "%profile_pictures%"}
       show:
         title: "Résumé du professeur n°%%entity_id%%"
         fields:
