@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualite{% endblock %}
+
+
+
+{% block body %}
+    {% embed "user/_navbar.html.twig" %}
+        {% block nav_items %}
+        {% endblock %}
+    {% endembed %}
+    {% embed "user/_container.html.twig" %}
+        {% block container %}
+            {% embed "user/_card.html.twig" with {card_header:1} %}
+                {% block header %}
+                    {{ actualite.titre }} le
+                    <i>{{ actualite.dateCreation ? actualite.dateCreation|date('Y-m-d') : '' }}</i>
+                {% endblock %}
+                {% block text %}
+                    <p>{{ actualite.contenu }}</p>
+
+                    <a class="btn btn-warning" href="{{ path('personne_index') }}">Retour au dashboard</a>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

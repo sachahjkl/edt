@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ActualiteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,12 +17,13 @@ class PersonneController extends AbstractController
 {
     /**
      * @Route("/dashboard", name="_index")
-     * @Route("", name="_root")
+     * @Route("/", name="_root")
      */
-    public function index()
+    public function index(ActualiteRepository $actualiteRepository)
     {
         return $this->render('personne/index.html.twig', [
-            'controller_name' => 'PersonneController',
+            'title' => "Dashboard",
+            'actualites' => $actualiteRepository->findAll()
         ]);
     }
 }
