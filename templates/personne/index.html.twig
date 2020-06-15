@@ -12,8 +12,8 @@
             <div class="row mx-2">
                 <div class="col-lg-8 col-12">
                     {% embed "user/_card.html.twig" with {card_header:1} %}
-                        {% block header %}
-                            <b>Bienvenu(e) {{ app.user.prenom|capitalize }} {{ app.user.nom|upper }}</b> - Emploi du temps
+                        {% block header %}<b>
+                            Bienvenu(e) {{ app.user.prenom|capitalize }} {{ app.user.nom|upper }}</b> - Emploi du temps {{ app.user.groupe.nom }}
                         {% endblock %}
                         {% block text %}
                             {% embed "calendar/fetch_calendar.html.twig" with {calendar_id: "cal-1"} %}
