@@ -3,17 +3,14 @@
 {% block title %}{{ title|default("Accueil") }}{% endblock %}
 {% block body %}
     {% embed "user/_navbar.html.twig" %}
-        {% block nav_items %}
-
-        {% endblock %}
     {% endembed %}
     {% embed "user/_container_fluid.html.twig" %}
         {% block container_fluid %}
-            <div class="row mx-2">
+            <div class="row mx-0 mx-lg-2">
                 <div class="col-lg-8 col-12">
                     {% embed "user/_card.html.twig" with {card_header:1} %}
                         {% block header %}<b>
-                            Bienvenu(e) {{ app.user.prenom|capitalize }} {{ app.user.nom|upper }}</b> - Emploi du temps {{ app.user.groupe.nom }}
+                            Bienvenu(e) {{ app.user.prenom|capitalize }} {{ app.user.nom|upper }}</b> - Emploi du temps {{ app.user.groupe is defined ? app.user.groupe|upper : "" }}
                         {% endblock %}
                         {% block text %}
                             {% embed "calendar/fetch_calendar.html.twig" with {calendar_id: "cal-1"} %}

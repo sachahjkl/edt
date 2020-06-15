@@ -223,5 +223,15 @@ abstract class Utilisateur implements UserInterface, Serializable
             ) = unserialize($serialized);
     }
 
+    public function getDropdowns(): array
+    {
+        return [];
+    }
+
+    public function getItems(): array
+    {
+        return [];
+    }
+
 
 }

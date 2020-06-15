@@ -124,4 +124,38 @@ abstract class Personne extends Utilisateur
         return strval($this->getPrenom() . " " . strtoupper($this->getNom()));
     }
 
+
+    public function getDropdowns(): array
+    {
+        $dropdowns = parent::getDropdowns();
+        $dropdowns_child = [
+            "Examens" => [
+                "logout" => "security_logout",
+                "not logout" => "security_logout"
+            ],
+            "Lil boy" => [
+                "logout" => "security_logout",
+                "not logout" => "security_logout"
+            ]
+        ];
+        if (empty($dropdowns))
+            return $dropdowns_child;
+        else
+            return array_merge($dropdowns, $dropdowns_child);
+    }
+
+    public function getItems(): array
+    {
+        $items = parent::getItems();
+        $items_child = ["Accueil" => "security_logout",
+            "Paramètres" => "security_logout"
+        ];
+
+        if (empty($items))
+            return $items_child;
+        else
+            return array_merge($items, $items_child);
+
+    }
+
 }
