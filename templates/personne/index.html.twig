@@ -26,7 +26,7 @@
                         {% block text %}
                             <ul>
                                 {% for actu in actualites %}
-                                    <li><a href="{{ path('actualite_show',{id: actu.id}) }}">{{ actu.titre }}</a> -
+                                    <li><a href="{{ path('actualite_show',{id: actu.id}) }}">"{{ actu.titre }}"</a> -
                                         créée
                                         le {{ actu.dateCreation ? actu.dateCreation|date('d-m-Y') : '' }}
                                         par <i>{{ actu.auteur.username }}</i></li>
