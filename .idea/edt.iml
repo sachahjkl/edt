@@ -129,5 +129,10 @@
     <orderEntry type="library" name="@fullcalendar/daygrid" level="application" />
     <orderEntry type="library" name="@fullcalendar/timegrid" level="application" />
     <orderEntry type="library" name="@fullcalendar/interaction" level="application" />
+    <orderEntry type="library" name="03b0271aa1" level="application" />
+    <orderEntry type="library" name="@fullcalendar/core" level="application" />
+    <orderEntry type="library" name="@fullcalendar/interaction" level="application" />
+    <orderEntry type="library" name="@fullcalendar/daygrid" level="application" />
+    <orderEntry type="library" name="@fullcalendar/timegrid" level="application" />
   </component>
 </module>

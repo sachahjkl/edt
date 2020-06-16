@@ -67,7 +67,7 @@ class CalendarSubscriber implements EventSubscriberInterface
 
     /**
      * @param int $id
-     * @return ArrayCollection
+     * @return array
      */
     public function getEleveCours(int $id): array
     {

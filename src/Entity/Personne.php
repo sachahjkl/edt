@@ -147,7 +147,7 @@ abstract class Personne extends Utilisateur
     public function getItems(): array
     {
         $items = parent::getItems();
-        $items_child = ["Accueil" => "security_logout",
+        $items_child = ["Accueil" => "personne_index",
             "Paramètres" => "security_logout"
         ];
 

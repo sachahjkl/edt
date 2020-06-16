@@ -6,9 +6,6 @@
 
 {% block body %}
     {% embed "user/_navbar.html.twig" %}
-        {% block nav_items %}
-
-        {% endblock %}
     {% endembed %}
     {% embed "user/_container.html.twig" %}
         {% block container %}
@@ -19,7 +16,6 @@
                 {% endblock %}
                 {% block text %}
                     <p>{{ actualite.contenu }}</p>
-
                     <a class="btn btn-warning" href="{{ path('personne_index') }}">Retour au dashboard</a>
                 {% endblock %}
             {% endembed %}

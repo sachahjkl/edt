@@ -9,6 +9,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             {% block nav_items %}
+                {% for name,route in app.user.items %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ path(route) }}">{{ name }}</a>
+                    </li>
+                {% endfor %}
                 {% for name,items in app.user.dropdowns %}
                     {% set id = random() %}
                     <li class="nav-item dropdown">
@@ -21,11 +26,6 @@
                                 <a class="dropdown-item" href="{{ path(route) }}">{{ item }}</a>
                             {% endfor %}
                         </div>
-                    </li>
-                {% endfor %}
-                {% for name,route in app.user.items %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="{{ path(route) }}">{{ name }}</a>
                     </li>
                 {% endfor %}
             {% endblock %}
