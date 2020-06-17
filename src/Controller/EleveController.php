@@ -38,7 +38,6 @@ class EleveController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('notice', 'Ouech pd');
             $this->getDoctrine()->getManager()->flush();
         }
 

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
@@ -183,7 +182,7 @@ abstract class Utilisateur implements UserInterface, Serializable
     {
         $this->profile_picture_file = $profile_picture_file;
         if (null !== $profile_picture_file) {
-            $this->updatedAt = new DateTimeImmutable();
+            $this->updatedAt = new \DateTimeImmutable();
         }
         return $this;
     }
@@ -250,12 +249,12 @@ abstract class Utilisateur implements UserInterface, Serializable
         return [];
     }
 
-    public function getUpdatedAt(): ?DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

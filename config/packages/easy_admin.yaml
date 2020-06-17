@@ -7,10 +7,12 @@ easy_admin:
     brand_color: '#5c70d6'
     assets:
       favicon: "/images/favicon.ico"
+      css:
+        - "/bundles/user/css/admin4.css"
     form_theme:
       - '@EasyAdmin/form/bootstrap_4.html.twig'
       - '@VichUploader/Form/fields.html.twig'
-    menu:
+    menu:git a
       - { label: 'Utilisateurs' }
       - { label: "Admin", icon: "user-cog", children: [ Utilisateur, Administrateur, Actualite, Document]}
       - { entity: "Professeur", icon: "chalkboard-teacher"}
@@ -362,7 +364,7 @@ easy_admin:
           - { property: "prenom", label: "Prénom"}
           - nom
           - { property: "date_naissance", label: "Date de naissance", type: "birthday", type_options: { widget: "single_text" }}
-          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%"}
+          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%", imagine_filter: "my_fixed_filter"}
           - { type: 'group', label: "Informations d'enseignant" }
           - { property: "matiere_responsable", label: "Matière reponsable"}
           - formation_responsable

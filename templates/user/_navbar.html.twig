@@ -10,7 +10,7 @@
         <ul class="navbar-nav mr-auto">
             {% block nav_items %}
                 {% for name,route in app.user.items %}
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path(route) }}">{{ name }}</a>
                     </li>
                 {% endfor %}
@@ -28,16 +28,29 @@
                         </div>
                     </li>
                 {% endfor %}
-                <li class="nav-item dropdown">
-                    {% if is_granted('ROLE_ELEVE') %}
-                        <a class="nav-link" href="{{ path("eleve_settings") }}">Paramètres</a>
-                    {% elseif is_granted("ROLE_PROF") %}
-                        <a class="nav-link" href="{{ path("personne_index") }}">Paramètres</a>
-                    {% endif %}
-                </li>
-
             {% endblock %}
         </ul>
+        {% if not app.user.profilePicturePath is null %}
+            {% set image = get_param("profile_pictures") ~ asset(app.user.profilePicturePath) %}
+        {% else %}
+            {% set image = asset("uploads/images/profile_pictures/user-circle.svg") %}
+        {% endif %}
+        {% if is_granted('ROLE_ELEVE') %}
+            {% set path = path("eleve_settings") %}
+        {% elseif is_granted("ROLE_PROF") %}
+            {% set path = path("personne_index") %}
+        {% endif %}
+        <span class="mx-lg-2 mx-0">
+            <a class="text-muted nav-link p-1" href="{{ path }}">
+                <i class="fas fa-cog"></i>
+                {{ app.user.prenom|capitalize ~ " " ~ app.user.nom|upper }}
+                <img src="{{ image|imagine_filter("my_fixed_filter") }}"
+                     alt="userpic"
+                     class="rounded-circle mx-1 shadow-lg"
+                     style="width: 2rem; vertical-align: -10px">
+            </a>
+        </span>
+
         <form class="form-inline" action="{{ path('security_logout') }}">
             <button class="btn btn-danger my-sm-0" type="submit">Logout</button>
         </form>
