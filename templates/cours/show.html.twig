@@ -1,38 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cours{% endblock %}
-
+{% block title %}Cours n°{{ cour.id }}{% endblock %}
 {% block body %}
-    <h1>Cours</h1>
+    {% embed "user/_navbar.html.twig" %}
+    {% endembed %}
+    {% embed "user/_container.html.twig" %}
+        {% block container %}
+            {% embed "user/_card.html.twig" with {card_header:1} %}
+                {% block header %}<b>
+                    Cours n°{{ cour.id }} {% if not cour.statut %} <span class="alert-danger">Annulé</span>{% endif %}
+                    </b>
+                {% endblock %}
+                {% block text %}
+                    <h5><u>{{ cour.matiere.intitule }} en {{ cour.salle.numero }}</u></h5>
+                    animé par : <b>{{ cour.professeur.prenom|capitalize }} {{ cour.professeur.nom|upper }}</b> au groupe {{ cour.groupe.nom|upper }}<br>
+                    <small><i>le {{ cour.debut ? cour.debut|date('d-m-Y') : '' }}</i></small><br>
+                    <small>de {{ cour.debut ? cour.debut|date('H:i:s') : '' }}
+                        à {{ cour.fin ? cour.fin|date('H:i:s') : '' }}</small>
+                    <div class="form-group mt-2">
+                        <label for="devoirs">Devoirs : </label>
+                        <textarea class="form-control" id="devoirs" rows="5" readonly>{{ cour.devoirs }}
+                        </textarea>
+                    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ cour.id }}</td>
-            </tr>
-            <tr>
-                <th>Debut</th>
-                <td>{{ cour.debut ? cour.debut|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Fin</th>
-                <td>{{ cour.fin ? cour.fin|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Devoirs</th>
-                <td>{{ cour.devoirs }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>{{ cour.statut ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('cours_index') }}">back to list</a>
-
-    <a href="{{ path('cours_edit', {'id': cour.id}) }}">edit</a>
-
-    {{ include('cours/_delete_form.html.twig') }}
+                    <a class="btn btn-warning mt-2" href="{{ path("personne_index") }}">Retour à l'accueil</a>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
+
+

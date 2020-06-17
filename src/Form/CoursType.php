@@ -14,12 +14,12 @@ class CoursType extends AbstractType
         $builder
             ->add('debut')
             ->add('fin')
-            ->add('devoirs')
             ->add('statut')
             ->add('salle')
             ->add('matiere')
             ->add('professeur')
             ->add('groupe')
+            ->add('devoirs')
         ;
     }
 

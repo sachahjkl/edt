@@ -3,92 +3,49 @@
 namespace App\Controller;
 
 use App\Entity\Eleve;
+use App\Form\EleveProfileType;
 use App\Form\EleveType;
+use App\Form\ResetPasswordType;
 use App\Repository\EleveRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-/**
- * @Route("/eleve")
- */
 class EleveController extends AbstractController
 {
     /**
-     * @Route("/", name="eleve_index", methods={"GET"})
+     * @Route("/personne/settings", name="eleve_settings", methods={"GET","POST"})/
+     * @IsGranted("ROLE_ELEVE")
      */
-    public function index(EleveRepository $eleveRepository): Response
+    public function edit(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
-        return $this->render('eleve/index.html.twig', [
-            'eleves' => $eleveRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="eleve_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $eleve = new Eleve();
-        $form = $this->createForm(EleveType::class, $eleve);
+        $eleve = $this->getUser();
+        $form = $this->createForm(EleveProfileType::class, $eleve);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($eleve);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('eleve_index');
+        $form_rp = $this->createForm(ResetPasswordType::class, $eleve);
+        $form_rp->handleRequest($request);
+        if ($form_rp->isSubmitted() && $form_rp->isValid()) {
+            $oldPassword = $form_rp->get('oldPassword')->getData();
+            $newEncodedPassword = $encoder->encodePassword($eleve, $eleve->getPlainPassword());
+            $eleve->setPassword($newEncodedPassword);
+            $this->getDoctrine()->getManager()->persist($eleve);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
         }
 
-        return $this->render('eleve/new.html.twig', [
-            'eleve' => $eleve,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="eleve_show", methods={"GET"})
-     */
-    public function show(Eleve $eleve): Response
-    {
-        return $this->render('eleve/show.html.twig', [
-            'eleve' => $eleve,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="eleve_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Eleve $eleve): Response
-    {
-        $form = $this->createForm(EleveType::class, $eleve);
-        $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('notice', 'Ouech pd');
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('eleve_index');
         }
 
         return $this->render('eleve/edit.html.twig', [
             'eleve' => $eleve,
             'form' => $form->createView(),
+            'form_rp' => $form_rp->createView()
         ]);
-    }
-
-    /**
-     * @Route("/{id}", name="eleve_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Eleve $eleve): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$eleve->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($eleve);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('eleve_index');
     }
 }

@@ -7,6 +7,7 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -22,16 +23,19 @@ abstract class Personne extends Utilisateur
 {
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Type("DateTime")
      */
     private $date_naissance;
 
@@ -129,14 +133,14 @@ abstract class Personne extends Utilisateur
     {
         $dropdowns = parent::getDropdowns();
         $dropdowns_child = [
-            "Examens" => [
-                "logout" => "security_logout",
-                "not logout" => "security_logout"
-            ],
-            "Lil boy" => [
-                "logout" => "security_logout",
-                "not logout" => "security_logout"
-            ]
+//            "Examens" => [
+//                "logout" => "security_logout",
+//                "not logout" => "security_logout"
+//            ],
+//            "Lil boy" => [
+//                "logout" => "security_logout",
+//                "not logout" => "security_logout"
+//            ]
         ];
         if (empty($dropdowns))
             return $dropdowns_child;
@@ -147,8 +151,8 @@ abstract class Personne extends Utilisateur
     public function getItems(): array
     {
         $items = parent::getItems();
-        $items_child = ["Accueil" => "personne_index",
-            "Paramètres" => "security_logout"
+        $items_child = [
+            "Accueil" => "personne_index",
         ];
 
         if (empty($items))

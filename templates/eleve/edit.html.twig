@@ -1,13 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Eleve{% endblock %}
-
+{% block title %}Paramètres de {{ app.user.prenom|capitalize }} {{ app.user.nom|upper }}{% endblock %}
 {% block body %}
-    <h1>Edit Eleve</h1>
-
-    {{ include('eleve/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('eleve_index') }}">back to list</a>
-
-    {{ include('eleve/_delete_form.html.twig') }}
+    {% embed "user/_navbar.html.twig" %}
+    {% endembed %}
+    {% embed "user/_container.html.twig" %}
+        {% block container %}
+            {% embed "user/_card.html.twig" with {card_header:1} %}
+                {% block header %}<b>
+                    Paramètres de {{ app.user.prenom|capitalize }} {{ app.user.nom|upper }}
+                {% endblock %}
+                {% block text %}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="flash-{{ label }} alert alert-success alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    <h5>Mise à jour du mot de passe</h5>
+                    {{ include('user/_reset_password.html.twig', {'button_label': 'Confirmer'}) }}
+                    <hr>
+                    {{ include('eleve/_form.html.twig', {'button_label': 'Confirmer'}) }}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

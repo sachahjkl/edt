@@ -2,31 +2,14 @@
 
 namespace App\EventSubscriber;
 
-use App\Repository\EleveRepository;
-use App\Repository\ProfesseurRepository;
-use App\Repository\UtilisateurRepository;
-use App\Security\UserAuthenticator;
 use CalendarBundle\CalendarEvents;
 use CalendarBundle\Entity\Event;
 use CalendarBundle\Event\CalendarEvent;
-use Doctrine\Common\Collections\ArrayCollection;
-use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 
-class CalendarSubscriber implements EventSubscriberInterface
+class CalendarSubscriber extends AbstractController implements EventSubscriberInterface
 {
-    private $logger;
-    private $professeurRepository;
-    private $eleveRepository;
-
-    public function __construct(LoggerInterface $logger, ProfesseurRepository $professeurRepository, EleveRepository $eleveRepository)
-    {
-        $this->logger = $logger;
-        $this->professeurRepository = $professeurRepository;
-        $this->eleveRepository = $eleveRepository;
-
-    }
 
     public static function getSubscribedEvents()
     {
@@ -40,50 +23,24 @@ class CalendarSubscriber implements EventSubscriberInterface
      */
     public function onCalendarSetData(CalendarEvent $calendar)
     {
-        $start = $calendar->getStart();
-        $end = $calendar->getEnd();
         $filters = $calendar->getFilters();
         $cours = array();
-        switch ($filters["type"]) {
-            case "ROLE_ELEVE":
-                $cours = $this->getEleveCours($filters["id"]);
-                break;
-            case "ROLE_PROF":
-                $cours = $this->getProfesseurCours($filters["id"]);
-                break;
+        if ($this->isGranted("ROLE_ELEVE")) {
+            $cours = $this->getUser()->getGroupe()->getCours()->toArray();
+        } elseif ($this->isGranted("ROLE_PROF")) {
+            $cours = $this->getUser()->getCours()->toArray();
         }
-
-        // You may want to make a custom query from your database to fill the calendar
 
         foreach ($cours as $c) {
             $p = $c->getProfesseur();
+            $url = $this->generateUrl("cours_show", ["id" => $c->getId()]);
             $calendar->addEvent(new Event(
                 $c->getMatiere()->getIntitule() . " par " . $p->getPrenom() . " " . $p->getNom(),
                 $c->getDebut(),
-                $c->getFin()
+                $c->getFin(),
+                ["url" => $url]
             ));
         }
-    }
-
-    /**
-     * @param int $id
-     * @return array
-     */
-    public function getEleveCours(int $id): array
-    {
-        $eleve = $this->eleveRepository->find($id);
-        $groupe = $eleve->getGroupe();
-        return $groupe->getCours()->toArray();
-    }
-
-    /**
-     * @param int $id
-     * @return array
-     */
-    public function getProfesseurCours(int $id): array
-    {
-        $prof = $this->professeurRepository->find($id);
-        return $prof->getCours()->toArray();
     }
 
 }

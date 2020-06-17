@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -32,6 +33,7 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Length(min="6")
      */
     private $username;
 
@@ -43,6 +45,7 @@ abstract class Utilisateur implements UserInterface, Serializable
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min="6")
      */
     private $password;
 
@@ -168,21 +171,29 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     /**
      * @param File $profile_picture_file
+     * @return $this
      */
-    public function setProfilePictureFile(File $profile_picture_file = null): void
+    public function setProfilePictureFile(?File $profile_picture_file = null): self
     {
         $this->profile_picture_file = $profile_picture_file;
-        if ($profile_picture_file) {
+        if (null !== $profile_picture_file) {
             $this->profile_picture_path = $this->profile_picture_path . "";
         }
+        return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getProfilePicturePath(): ?string
     {
         return $this->profile_picture_path;
     }
 
-
+    /**
+     * @param $profile_picture
+     * @return $this
+     */
     public function setProfilePicturePath($profile_picture): self
     {
         $this->profile_picture_path = $profile_picture;

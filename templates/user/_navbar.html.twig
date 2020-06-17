@@ -28,6 +28,14 @@
                         </div>
                     </li>
                 {% endfor %}
+                <li class="nav-item dropdown">
+                    {% if is_granted('ROLE_ELEVE') %}
+                        <a class="nav-link" href="{{ path("eleve_settings") }}">Paramètres</a>
+                    {% elseif is_granted("ROLE_PROF") %}
+                        <a class="nav-link" href="{{ path("personne_index") }}">Paramètres</a>
+                    {% endif %}
+                </li>
+
             {% endblock %}
         </ul>
         <form class="form-inline" action="{{ path('security_logout') }}">

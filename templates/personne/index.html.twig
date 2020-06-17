@@ -13,7 +13,7 @@
                             Bienvenu(e) {{ app.user.prenom|capitalize }} {{ app.user.nom|upper }}</b> - Emploi du temps {{ app.user.groupe is defined ? app.user.groupe|upper : "" }}
                         {% endblock %}
                         {% block text %}
-                            {% embed "calendar/fetch_calendar.html.twig" with {calendar_id: "cal-1"} %}
+                            {% embed "calendar/fetch_calendar.html.twig" with {calendar_id: "cal_1"} %}
                             {% endembed %}
                         {% endblock %}
                     {% endembed %}

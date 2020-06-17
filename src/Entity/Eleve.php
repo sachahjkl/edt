@@ -118,20 +118,16 @@ class Eleve extends Personne
         return $this;
     }
 
-    public function getMenu(): array
+    public function getItems(): array
     {
-        $menu = parent::getMenu();
-        $menu[] = [
-            "Élèves du groupe" => ["route" => "eleve_group_students"],
-            "Examens" => [
-                "sub" => [
-                    "logout" => [
-                        "route" => "security_logout"
-                    ]
-                ]
-            ]
+        $items = parent::getItems();
+        $items_child = [
         ];
-        return array_unique($menu);
+
+        if (empty($items))
+            return $items_child;
+        else
+            return array_merge($items, $items_child);
     }
 
 }

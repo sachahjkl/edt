@@ -20,6 +20,24 @@
             background: url("{{ asset('images/bg.jpg') }}") no-repeat center fixed;
             background-size: cover;
         }
+
+        @media print {
+            html {
+                background: #737575;
+            }
+        }
+        body form img{
+            max-width: 350px;
+        }
+
+        a[download=""]+a[download=""]{
+            padding: 5px;
+            border: 2px dimgrey dashed;
+            background-color: ghostwhite;
+            border-radius: 5px;
+            color: #4c5367;
+        }
+
     </style>
 
 </head>

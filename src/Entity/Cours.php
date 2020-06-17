@@ -32,12 +32,14 @@ class Cours
 
     /**
      * @ORM\Column(type="datetime")
+     * Assert\Type("DateTime")
      */
     private $debut;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\GreaterThan(propertyPath="debut")
+     * Assert\Type("DateTime")
      */
     private $fin;
 

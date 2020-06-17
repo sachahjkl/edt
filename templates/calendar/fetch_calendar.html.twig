@@ -1,58 +1,81 @@
-{% if is_granted('ROLE_ELEVE') %}
-    {% set type = "ROLE_ELEVE" %}
-{% elseif is_granted('ROLE_PROF') %}
-    {% set type = "ROLE_PROF" %}
-{% endif %}
-
 <div id="{{ calendar_id|default("calendar-holder") }}"></div>
+<button id="{{ calendar_id|default("calendar-holder") }}-btn" class="mt-2 btn btn-primary"><i class="fas fa-print"></i>
+    Imprimer
+</button>
 
 {% block calendar_local_javascript %}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const calendarEl = document.getElementById("{{ calendar_id|default("calendar-holder") }}");
+            const calendarEl_{{ calendar_id|default("calendar-holder") }} = document.getElementById("{{ calendar_id|default("calendar-holder") }}");
 
-            const calendar = new FullCalendar.Calendar(calendarEl, {
+            const calendar_{{ calendar_id|default("calendar-holder") }} = new FullCalendar.Calendar(calendarEl_{{ calendar_id|default("calendar-holder") }}, {
                 height: 650,
-                defaultView: 'timeGridWeek',
+                themeSystem: 'bootstrap',
                 locale: "fr",
                 editable: false,
+                plugins: ['dayGrid', 'timeGrid', 'list', 'bootstrap'], // https://fullcalendar.io/docs/plugin-index
+                defaultView: 'timeGridWeek',
                 eventSources: [
                     {
                         url: "/fc-load-events",
                         method: "POST",
                         extraParams: {
-                            filters: JSON.stringify({
-                                type: "{{ type|default("none") }}",
-                                id: {{ app.user.id|default(0) }}
-                            })
+                            filters: JSON.stringify({})
                         },
                         failure: () => {
-                            alert("There was an error while fetching FullCalendar!");
+                            alert("Il y a eu une erreur au chargement du calendrier!");
                         },
                     },
                 ],
+                eventClick: function (info) {
+                    console.log(info);
+                },
                 header: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'timeGridDay,timeGridWeek,dayGridMonth',
+                    right: 'timeGridDay,timeGridWeek,dayGridMonth,listWeek',
                 },
-                plugins: ['dayGrid', 'timeGrid'], // https://fullcalendar.io/docs/plugin-index
                 timeZone: 'UTC+2',
             });
-            calendar.render();
+            calendar_{{ calendar_id|default("calendar-holder") }}.render();
+
+
+            document.getElementById("{{ calendar_id|default("calendar-holder") }}-btn").addEventListener("click", () => {
+                calendar_{{ calendar_id|default("calendar-holder") }}.changeView("listWeek");
+                console.log("test")
+                printJS({
+                    printable: "{{ calendar_id|default("calendar-holder") }}",
+                    type: 'html',
+                    targetStyles: ['*'],
+                    css: [
+                        "https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.min.css",
+                        "https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.min.css",
+                        "https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.min.css",
+                        "https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap/main.min.css",
+                        "https://cdn.jsdelivr.net/npm/@fullcalendar/list/main.min.css"
+                    ]
+                })
+            });
         });
+
     </script>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/list/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap/main.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/list/main.min.css">
+
 {% endblock %}
