@@ -12,6 +12,7 @@ easy_admin:
     form_theme:
       - '@EasyAdmin/form/bootstrap_4.html.twig'
       - '@VichUploader/Form/fields.html.twig'
+    menu:
       - { label: 'Utilisateurs' }
       - { label: "Admin", icon: "user-cog", children: [ Utilisateur, Administrateur, Actualite, Document]}
       - { entity: "Professeur", icon: "chalkboard-teacher"}
