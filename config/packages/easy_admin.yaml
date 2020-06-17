@@ -364,7 +364,7 @@ easy_admin:
           - { property: "prenom", label: "Prénom"}
           - nom
           - { property: "date_naissance", label: "Date de naissance", type: "birthday", type_options: { widget: "single_text" }}
-          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%", imagine_filter: "my_fixed_filter"}
+          - { property: "profile_picture_file", type: "vich_image", label: "Image de profil", base_path: "%profile_pictures%"}
           - { type: 'group', label: "Informations d'enseignant" }
           - { property: "matiere_responsable", label: "Matière reponsable"}
           - formation_responsable
