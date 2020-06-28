@@ -91,4 +91,9 @@ class Examen extends Cours
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return strval($this->getMatiere() . " - Note sur " . $this->getNoteMax() . " - Coefficient " . $this->getCoefficient());
+    }
 }

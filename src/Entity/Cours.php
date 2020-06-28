@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=CoursRepository::class)
@@ -176,7 +177,6 @@ class Cours
     public function setProfesseur(?Professeur $professeur): self
     {
         $this->professeur = $professeur;
-
         return $this;
     }
 
@@ -225,7 +225,23 @@ class Cours
 
     public function __toString()
     {
-//        return strval($this->getMatiere() . " - " . $this->getSalle());
-        return strval($this->getId());
+        return strval($this->getMatiere() . " - " . $this->getSalle());
+
+    }
+
+    /**
+     * @Assert\Callback
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        $professeur = $this->getProfesseur();
+        $matiere = $this->getMatiere();
+        if ($professeur !== $matiere->getResponsable() && !$matiere->getProfesseurs()->contains($professeur)) {
+            $context->buildViolation("Le professeur dispensant le cours doit être le responsable ou faire parti des professeurs autorisés")
+                ->atPath("professeur")
+                ->addViolation();
+        }
     }
 }

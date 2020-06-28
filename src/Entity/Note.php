@@ -4,10 +4,16 @@ namespace App\Entity;
 
 use App\Repository\NoteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=NoteRepository::class)
+ * @UniqueEntity(
+ *     fields={"eleve", "examen"},
+ *     errorPath="eleve",
+ *     message="Une note a déjà attribuée à cet élève pour cet examen."
+ * )
  */
 class Note
 {

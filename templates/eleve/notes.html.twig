@@ -53,7 +53,7 @@
                         {% for matiere,moyenne in moyennes %}
                             <tr>
                                 <td>{{ matiere }}</td>
-                                <td>{{ moyenne }}</td>
+                                <td>{{ moyenne|round(1, 'floor') }}</td>
                             </tr>
                         {% else %}
                             <tr>

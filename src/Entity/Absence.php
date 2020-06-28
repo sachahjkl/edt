@@ -4,9 +4,15 @@ namespace App\Entity;
 
 use App\Repository\AbsenceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=AbsenceRepository::class)
+ * @UniqueEntity(
+ *     fields={"eleve", "cours"},
+ *     errorPath="eleve",
+ *     message="Une absence a déjà attribuée à cet élève pour ce cours."
+ * )
  */
 class Absence
 {

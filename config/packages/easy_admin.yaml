@@ -244,7 +244,6 @@ easy_admin:
           - { type: 'group', label: "Informations sur les note" }
           - coefficient
           - note_max
-          - notes
       show:
         title: "Résumé de l'examen n°%%entity_id%%"
         fields:
@@ -315,6 +314,11 @@ easy_admin:
       class: App\Entity\Matiere
       form:
         title: "Gestion d'une matière"
+        fields:
+          - { property: intitule, label: "Intitulé"}
+          - { property: credits_ects, label: "Crédits ECTS"}
+          - {property: responsable, label: "Professeur responsable"}
+          - {property: professeurs, label: "Professeurs enseignants"}
       show:
         title: "Résumé de la matière n°%%entity_id%%"
         fields:
@@ -334,7 +338,6 @@ easy_admin:
           - {property: eleve, label: "Élève"}
           - examen
           - note
-      #          - {property: "examen.note_max", label: "Note maximum", type: "text", type_options: { disabled: true }}
       show:
         title: "Résumé de la note n°%%entity_id%%"
         fields:
@@ -353,6 +356,13 @@ easy_admin:
           - examen
           - note
           - {property: "examen.note_max", label: "Note maximum"}
+      edit:
+        title: "Gestion d'une note"
+        fields:
+          - {property: eleve, label: "Élève"}
+          - examen
+          - note
+          - {property: "examen.note_max", label: "Note maximum", type: "text", type_options: { disabled: true }}
     Professeur:
       class: App\Entity\Professeur
       controller: App\Controller\EasyAdminUtilisateurController
