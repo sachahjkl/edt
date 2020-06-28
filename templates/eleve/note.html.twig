@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Note n°{{ note.id }}{% endblock %}
+{% block body %}
+    {% embed "user/_navbar.html.twig" %}
+    {% endembed %}
+    {% embed "user/_container.html.twig" %}
+        {% block container %}
+            {% embed "user/_card.html.twig" with {card_header:1} %}
+                {% block header %}<b>
+                    Note n°{{ note.id }}
+                    </b>
+                {% endblock %}
+                {% block text %}
+                    <h5><u>Note de {{ note.examen.matiere.intitule }} </u></h5>
+                    Noté par : <b>{{ note.examen.professeur.prenom|capitalize }} {{ note.examen.professeur.nom|upper }}</b><br>
+                    <br>
+                    <b>Résultat :</b>
+                    <p>{{ note.note ~ " / " ~ note.examen.noteMax }}</p>
+
+                    <a class="btn btn-warning mt-2" href="{{ path("eleve_notes") }}">Retour aux notes</a>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+

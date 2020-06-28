@@ -334,7 +334,7 @@ easy_admin:
           - {property: eleve, label: "Élève"}
           - examen
           - note
-          - {property: "examen.note_max", label: "Note maximum", type: "text", type_options: { disabled: true }}
+      #          - {property: "examen.note_max", label: "Note maximum", type: "text", type_options: { disabled: true }}
       show:
         title: "Résumé de la note n°%%entity_id%%"
         fields:

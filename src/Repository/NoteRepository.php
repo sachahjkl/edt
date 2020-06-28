@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Eleve;
+use App\Entity\Matiere;
 use App\Entity\Note;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +19,21 @@ class NoteRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Note::class);
+    }
+
+    public function getMoyenne(Eleve $eleve, Matiere $matiere)
+    {
+        $entityManager = $this->getEntityManager();
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select("SUM(n.note * e.coefficient)/SUM(e.coefficient)")
+            ->from("App:Note", "n")
+            ->innerJoin("n.examen", "e")
+            ->where("e.matiere = :matiere")
+            ->andWhere("n.eleve = :eleve")
+            ->setParameter("matiere", $matiere)
+            ->setParameter("eleve", $eleve);
+
+        return $qb->getQuery()->getResult();
     }
 
     // /**

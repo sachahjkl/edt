@@ -38,7 +38,7 @@
         {% if is_granted('ROLE_ELEVE') %}
             {% set path = path("eleve_settings") %}
         {% elseif is_granted("ROLE_PROF") %}
-            {% set path = path("personne_index") %}
+            {% set path = path("prof_settings") %}
         {% endif %}
         <span class="mx-lg-2 mx-0">
             <a class="text-muted nav-link p-1" href="{{ path }}">
