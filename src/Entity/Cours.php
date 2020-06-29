@@ -243,5 +243,16 @@ class Cours
                 ->atPath("professeur")
                 ->addViolation();
         }
+        if ($this->getDebut()->format("H") < 8) {
+            $context->buildViolation("Les cours commencent à partir de 8h au plus tôt")
+                ->atPath("debut")
+                ->addViolation();
+        }
+        if($this->getFin()->format("H") > 20){
+            $context->buildViolation("Les cours se terminent à 20h au plus tard")
+                ->atPath("fin")
+                ->addViolation();
+        }
+
     }
 }

@@ -9,8 +9,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=AbsenceRepository::class)
  * @UniqueEntity(
- *     fields={"eleve", "cours"},
- *     errorPath="eleve",
+ *     fields={"absent", "cours"},
+ *     errorPath="absent",
  *     message="Une absence a déjà attribuée à cet élève pour ce cours."
  * )
  */
@@ -30,8 +30,9 @@ class Absence
 
     /**
      * @ORM\Column(type="boolean")
+     * Si l'absence est active ou non ( false = pas justifié, true = justifiée)
      */
-    private $statut = true;
+    private $statut = false;
 
     /**
      * @ORM\ManyToOne(targetEntity=Eleve::class, inversedBy="absences")
@@ -100,6 +101,6 @@ class Absence
 
     public function __toString()
     {
-        return strval($this->getId());
+        return strval("Absence de " . $this->getAbsent() . " au cours de " . $this->getCours());
     }
 }

@@ -121,7 +121,8 @@ class Eleve extends Personne
     {
         $items = parent::getItems();
         $items_child = [
-            "Notes" => "eleve_notes"
+            "Notes" => "eleve_notes",
+            "Absences" => "eleve_absences"
         ];
 
         if (empty($items))

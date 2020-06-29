@@ -57,7 +57,7 @@ easy_admin:
           - absent
           - {property: "cours", required: true}
           - {property: "motif", type: "text_editor"}
-          - {property: "statut", label: "Validité de l'absence"}
+          - {property: "statut", label: "Absence justifiée"}
       list:
         batch_actions: ["delete"]
         actions: ["show","edit","delete"]
@@ -65,11 +65,15 @@ easy_admin:
         fields:
           - id
           - absent
-          - {property: "statut", label: "Validité de l'absence"}
+          - {property: "statut", label: "Absence justifiée"}
           - {property: "cours", required: true}
-          - {property: "motif"}
       show:
         title: "Résumé de l'absence n°%%entity_id%%"
+        fields:
+          - absent
+          - {property: "statut", type: "boolean", label: "Absence justifiée"}
+          - cours
+          - {property: "motif", type: "text"}
     Actualite:
       label: Actualité
       class: App\Entity\Actualite
@@ -130,7 +134,7 @@ easy_admin:
           - {property: "debut", label: "Début"}
           - fin
           - { type: 'group', label: 'Devoirs'}
-          - { property: 'devoirs', label: 'Saisie des devoirs'}
+          - { property: 'devoirs', label: 'Saisie des devoirs', type: "text_editor"}
       show:
         title: "Résumé du cours n°%%entity_id%%"
         fields:

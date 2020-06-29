@@ -146,4 +146,17 @@ class Professeur extends Personne
         return strval($this->getPrenom() . " " . $this->getNom());
     }
 
+    public function getItems(): array
+    {
+        $items = parent::getItems();
+        $items_child = [
+            "Cours & examens" => "prof_cours",
+        ];
+
+        if (empty($items))
+            return $items_child;
+        else
+            return array_merge($items, $items_child);
+    }
+
 }

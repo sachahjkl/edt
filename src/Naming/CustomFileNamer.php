@@ -11,12 +11,6 @@ use Vich\UploaderBundle\Naming\NamerInterface;
  */
 class CustomFileNamer implements NamerInterface
 {
-    private $logger;
-
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
 
     public function name($object, PropertyMapping $mapping): string
     {

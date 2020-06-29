@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Absence n°{{ absence.id }}{% endblock %}
+{% block body %}
+    {% embed "user/_navbar.html.twig" %}
+    {% endembed %}
+    {% embed "user/_container.html.twig" %}
+        {% block container %}
+            {% embed "user/_card.html.twig" with {card_header:1} %}
+                {% block header %}<b>
+                    Justifier : <i>"{{ absence }}"</i>
+                    </b>
+                {% endblock %}
+                {% block text %}
+                    <b>Cours : </b> <a href="{{ path("cours_show",{id: absence.cours.id}) }}">{{ absence.cours }}</a>
+                    {{ include('eleve/absence/_form.html.twig', {'button_label': 'Confirmer'}) }}
+
+                    <a class="btn btn-warning mt-2" href="{{ path("eleve_absences") }}">Retour aux absences</a>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+

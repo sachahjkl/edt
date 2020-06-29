@@ -2,9 +2,9 @@
 
 namespace App\Twig;
 
+use App\Entity\Examen;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class ParamExtension extends AbstractExtension
@@ -19,6 +19,7 @@ class ParamExtension extends AbstractExtension
     {
         return [
             new TwigFunction('get_param', [$this, 'getParameter']),
+            new TwigFunction("is_exam", [$this, 'isExamen'])
         ];
     }
 
@@ -30,5 +31,9 @@ class ParamExtension extends AbstractExtension
     public function getParameter($value)
     {
         return $this->parameterBag->get($value);
+    }
+
+    public function isExamen($value){
+        return $value instanceof Examen;
     }
 }

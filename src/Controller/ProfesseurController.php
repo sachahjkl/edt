@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Cours;
 use App\Form\ProfesseurProfileType;
 use App\Form\ResetPasswordType;
+use App\Repository\CoursRepository;
+use App\Repository\ExamenRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,14 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/professeur")
+ * @Route("/prof", name="prof")
+ * @IsGranted("ROLE_PROF")
  */
 class ProfesseurController extends AbstractController
 {
 
     /**
-     * @Route("/prof/settings", name="prof_settings", methods={"GET","POST"})
-     * @IsGranted("ROLE_PROF")
+     * @Route("/settings", name="_settings", methods={"GET","POST"})
      */
     public function edit(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
@@ -44,6 +47,43 @@ class ProfesseurController extends AbstractController
             'form' => $form->createView(),
             'form_rp' => $form_rp->createView()
         ]);
+    }
+
+    /**
+     * @Route("/cours", name="_cours")
+     */
+    public function indexCours()
+    {
+        $prof = $this->getUser();
+        $cours = $prof->getCours()->filter(function ($cours) {
+            return $cours->getStatut();
+        });
+
+        return $this->render('professeur/cours/index.html.twig', [
+                "cours" => $cours
+            ]
+        );
+    }
+
+
+    /**
+     * @Route("/cours/edit/{id}", name="_cours_edit")
+     * @param Response $response
+     * @param CoursRepository $coursRepository
+     */
+    public function editCours(Request $request, CoursRepository $coursRepository)
+    {
+        return $this->redirectToRoute("prof_cours");
+    }
+
+    /**
+     * @Route("/exam/edit/{id}", name="_exam_edit")
+     * @param Response $response
+     * @param ExamenRepository $examenRepository
+     */
+    public function editExam(Request $request, ExamenRepository $examenRepository)
+    {
+        return $this->redirectToRoute("prof_cours");
     }
 
 }
