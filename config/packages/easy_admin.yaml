@@ -54,10 +54,10 @@ easy_admin:
         title: "Enregistrer l'absence d'un élève"
         fields:
           - { type: 'group', label: "Informations sur l'absence" }
+          - {property: "statut", label: "Absence justifiée"}
           - absent
           - {property: "cours", required: true}
-          - {property: "motif", type: "text_editor"}
-          - {property: "statut", label: "Absence justifiée"}
+          - {property: "motif", label: "Motif de l'absence", type: "text_editor"}
       list:
         batch_actions: ["delete"]
         actions: ["show","edit","delete"]
@@ -214,6 +214,7 @@ easy_admin:
         fields:
           - id
           - username
+          - groupe
           - { property: "prenom", label: "Prénom"}
           - nom
           - date_naissance

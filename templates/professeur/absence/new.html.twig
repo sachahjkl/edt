@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'une absence pour {% if is_exam(cours) %}l'examen{% else %}le cours{% endif %} {{ cours }}{% endblock %}
+{% block body %}
+    {% embed "user/_navbar.html.twig" %}
+    {% endembed %}
+    {% embed "user/_container.html.twig" %}
+        {% block container %}
+            {% embed "user/_card.html.twig" with {card_header:1} %}
+                {% block header %}<b>
+                    Création d'une absence pour {% if is_exam(cours) %}l'examen{% else %}le cours{% endif %} {{ cours }}
+                    </b>
+                {% endblock %}
+                {% block text %}
+                    {{ include('professeur/absence/_form.html.twig') }}
+
+                    <a class="btn btn-warning mt-2" href="{{ path("prof_cours_absences", {id: cours.id}) }}">Retour
+                        aux absences</a>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+

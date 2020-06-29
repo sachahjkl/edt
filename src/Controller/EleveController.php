@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\AbsenceEleveType;
+use App\Form\EleveAbsenceType;
 use App\Form\EleveProfileType;
 use App\Form\ResetPasswordType;
 use App\Repository\AbsenceRepository;
@@ -111,7 +111,7 @@ class EleveController extends AbstractController
     }
 
     /**
-     * @Route("/absence/{id}", name="_absence_edit")
+     * @Route("/absence/{id}/edit", name="_absence_edit")
      */
     public function editAbsence(Request $request, AbsenceRepository $absenceRepository): Response
     {
@@ -122,7 +122,7 @@ class EleveController extends AbstractController
         ]);
 
         if ($absence) {
-            $form = $this->createForm(AbsenceEleveType::class, $absence);
+            $form = $this->createForm(EleveAbsenceType::class, $absence);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {

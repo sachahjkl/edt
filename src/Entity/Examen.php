@@ -35,6 +35,8 @@ class Examen extends Cours
     {
         parent::__construct();
         $this->notes = new ArrayCollection();
+        $this->note_max = 20;
+        $this->coefficient = 1;
     }
 
     public function getCoefficient(): ?float

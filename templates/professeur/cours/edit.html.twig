@@ -1,21 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Absence n°{{ absence.id }}{% endblock %}
+{% block title %}Cours n°{{ cours.id }}{% endblock %}
 {% block body %}
     {% embed "user/_navbar.html.twig" %}
     {% endembed %}
     {% embed "user/_container.html.twig" %}
         {% block container %}
             {% embed "user/_card.html.twig" with {card_header:1} %}
-                {% block header %}<b>
-                    Justifier : <i>"{{ absence }}"</i>
-                    </b>
+                {% block header %}
+                    <b>Gestion du cours n°{{ cours.id }}</b>
                 {% endblock %}
                 {% block text %}
-                    <b>Cours : </b> <a href="{{ path("cours_show",{id: absence.cours.id}) }}">{{ absence.cours }}</a>
-                    {{ include('eleve/absence/_form.html.twig', {'button_label': 'Confirmer'}) }}
+                    <h5>
+                        <u>{{ cours.matiere.intitule }} en {{ cours.salle.numero }}</u>
+                    </h5>
+                    animé par :
+                    <b>{{ cours.professeur.prenom|capitalize }} {{ cours.professeur.nom|upper }}</b> au groupe {{ cours.groupe.nom|upper }}
+                    <br>
+                    <small><i>le {{ cours.debut ? cours.debut|date('d-m-Y') : '' }}</i></small><br>
+                    <small>de {{ cours.debut ? cours.debut|date('H:i:s') : '' }}
+                        à {{ cours.fin ? cours.fin|date('H:i:s') : '' }}</small>
 
-                    <a class="btn btn-warning mt-2" href="{{ path("eleve_absences") }}">Retour aux absences</a>
+                    {{ include('professeur/cours/_form.html.twig', {'button_label': 'Confirmer'}) }}
+
+                    <a class="btn btn-warning mt-2" href="{{ path("prof_cours") }}">Retour aux cours</a>
                 {% endblock %}
             {% endembed %}
         {% endblock %}

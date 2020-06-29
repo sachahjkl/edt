@@ -239,17 +239,25 @@ class Cours
         $professeur = $this->getProfesseur();
         $matiere = $this->getMatiere();
         if ($professeur !== $matiere->getResponsable() && !$matiere->getProfesseurs()->contains($professeur)) {
-            $context->buildViolation("Le professeur dispensant le cours doit être le responsable ou faire parti des professeurs autorisés")
+            $context->buildViolation("Le professeur dispensant le cours doit être le responsable ou faire parti des professeurs autorisés.")
                 ->atPath("professeur")
                 ->addViolation();
         }
         if ($this->getDebut()->format("H") < 8) {
-            $context->buildViolation("Les cours commencent à partir de 8h au plus tôt")
+            $context->buildViolation("Les cours commencent à partir de 8h au plus tôt.")
                 ->atPath("debut")
                 ->addViolation();
         }
-        if($this->getFin()->format("H") > 20){
+        if ($this->getFin()->format("H") > 20) {
             $context->buildViolation("Les cours se terminent à 20h au plus tard")
+                ->atPath("fin")
+                ->addViolation();
+        }
+
+        $debut = clone $this->debut;
+        $fin_max = date_add($debut, new DateInterval("PT6H"));
+        if ($this->getFin() > $fin_max) {
+            $context->buildViolation("Un cours ne peut pas durer plus de 6H.")
                 ->atPath("fin")
                 ->addViolation();
         }

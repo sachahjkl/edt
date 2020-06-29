@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Cours;
 use App\Entity\Eleve;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -35,6 +36,31 @@ class EleveRepository extends ServiceEntityRepository implements PasswordUpgrade
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+
+    public function getElevesSansAbsences(Cours $cours)
+    {
+        $entityManager = $this->getEntityManager();
+        $qb = $entityManager->createQueryBuilder();
+        $eleves_deja_absents = $qb->select("e")
+            ->from("App:Eleve", "e")
+            ->leftJoin("e.absences", "a")
+            ->where("a.cours = :cours")
+            ->setParameter("cours", $cours)
+            ->getQuery()
+            ->getResult();
+
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select("e")
+            ->from("App:Eleve", "e")
+            ->where($qb->expr()->eq("e.groupe", ":groupe"))
+            ->setParameter("groupe", $cours->getGroupe());
+        if (count($eleves_deja_absents) != 0) {
+            $qb->andWhere($qb->expr()->notIn("e", ":eleves_deja_absents"))
+                ->setParameter("eleves_deja_absents", $eleves_deja_absents);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
 

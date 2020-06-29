@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cours n°{{ cour.id }}{% endblock %}
+{% block title %}Cours n°{{ cours.id }}{% endblock %}
 {% block body %}
     {% embed "user/_navbar.html.twig" %}
     {% endembed %}
@@ -8,32 +8,32 @@
         {% block container %}
             {% embed "user/_card.html.twig" with {card_header:1} %}
                 {% block header %}<b>
-                    Cours n°{{ cour.id }} {% if not cour.statut %} <span
+                    Cours n°{{ cours.id }} {% if not cours.statut %} <span
                         class="badge badge-danger">Annulé</span>{% endif %}
                     </b>
                 {% endblock %}
                 {% block text %}
                     <h5>
-                        {% if is_exam(cour) %}
+                        {% if is_exam(cours) %}
                             <span class="badge badge-danger">Examen</span>
                         {% endif %}
-                        <u>{{ cour.matiere.intitule }} en {{ cour.salle.numero }}</u>
+                        <u>{{ cours.matiere.intitule }} en {{ cours.salle.numero }}</u>
                     </h5>
                     animé par :
-                    <b>{{ cour.professeur.prenom|capitalize }} {{ cour.professeur.nom|upper }}</b> au groupe {{ cour.groupe.nom|upper }}
+                    <b>{{ cours.professeur.prenom|capitalize }} {{ cours.professeur.nom|upper }}</b> au groupe {{ cours.groupe.nom|upper }}
                     <br>
-                    <small><i>le {{ cour.debut ? cour.debut|date('d-m-Y') : '' }}</i></small><br>
-                    <small>de {{ cour.debut ? cour.debut|date('H:i:s') : '' }}
-                        à {{ cour.fin ? cour.fin|date('H:i:s') : '' }}</small>
+                    <small><i>le {{ cours.debut ? cours.debut|date('d-m-Y') : '' }}</i></small><br>
+                    <small>de {{ cours.debut ? cours.debut|date('H:i:s') : '' }}
+                        à {{ cours.fin ? cours.fin|date('H:i:s') : '' }}</small>
                     <div class="form-group mt-2">
                         <label for="devoirs">Devoirs : </label>
-                        <textarea class="form-control" id="devoirs" rows="5" readonly>{{ cour.devoirs }}
+                        <textarea class="form-control" id="devoirs" rows="5" readonly>{{ cours.devoirs }}
                         </textarea>
                     </div>
 
                     <a class="btn btn-warning mt-2" href="{{ path("personne_index") }}">Retour à l'accueil</a>
                     {% if is_granted("ROLE_PROF") %}
-                        <a class="btn btn-outline-primary mt-2" href="{{ path("prof_cours_edit", {id: cour.id})  }}">Saisir les devoirs
+                        <a class="btn btn-outline-primary mt-2" href="{{ path("prof_cours_edit", {id: cours.id})  }}">Saisir les devoirs
                             & absents</a>
                     {% endif %}
                 {% endblock %}

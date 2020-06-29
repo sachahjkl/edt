@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class ProfesseurProfileType extends AbstractType
+class ProfProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

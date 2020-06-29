@@ -33,19 +33,17 @@
                                             {{ c }}
                                         {% endif %}
                                     </td>
-                                    <td>{{ c.debut|date('d-m-Y') }}</td>
-                                    <td>{{ c.fin|date('d-m-Y') }}</td>
+                                    <td>{{ c.debut|date('H:i d/m/Y') }}</td>
+                                    <td>{{ c.fin|date('H:i d/m/Y') }}</td>
                                     <td>{{ c.groupe }}</td>
                                     <td>
                                         {% if is_exam(c) %}
-                                            <a href="{{ path("prof_exam_edit", {id: c.id}) }}">Saisir les notes
-                                                & absents</a>
+                                            <a href="{{ path("prof_exam_notes", {id: c.id}) }}">Notes</a>&nbsp;|&nbsp;
                                         {% else %}
-                                            <a href="{{ path("prof_cours_edit", {id: c.id}) }}">Saisir les devoirs
-                                                & absents</a>
+                                            <a href="{{ path("prof_cours_edit", {id: c.id}) }}">Devoirs</a>&nbsp;|&nbsp;
                                         {% endif %}
-                                        | <a href="{{ path("cours_show", {id: c.id}) }}">Voir</a>
-
+                                        <a href="{{ path("prof_cours_absences", {id: c.id}) }}">Absences</a>&nbsp;|&nbsp;
+                                        <a href="{{ path("cours_show", {id: c.id}) }}">Voir</a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -56,6 +54,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <a class="btn btn-warning" href="{{ path("personne_index") }}">Retourner à l'accueil</a>
                 {% endblock %}
             {% endembed %}
         {% endblock %}

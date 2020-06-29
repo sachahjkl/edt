@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\AbsenceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=AbsenceRepository::class)
@@ -24,7 +26,7 @@ class Absence
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $motif;
 
@@ -32,7 +34,7 @@ class Absence
      * @ORM\Column(type="boolean")
      * Si l'absence est active ou non ( false = pas justifié, true = justifiée)
      */
-    private $statut = false;
+    private $statut;
 
     /**
      * @ORM\ManyToOne(targetEntity=Eleve::class, inversedBy="absences")
@@ -46,6 +48,12 @@ class Absence
      */
     private $cours;
 
+    public function __construct()
+    {
+        $this->motif = "Vide";
+        $this->statut = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,10 +64,9 @@ class Absence
         return $this->motif;
     }
 
-    public function setMotif(string $motif): self
+    public function setMotif(?string $motif): self
     {
         $this->motif = $motif;
-
         return $this;
     }
 
@@ -102,5 +109,21 @@ class Absence
     public function __toString()
     {
         return strval("Absence de " . $this->getAbsent() . " au cours de " . $this->getCours());
+    }
+
+    /**
+     * @Assert\Callback
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        $groupe_cours = $this->getCours()->getGroupe();
+        $groupe_eleve = $this->getAbsent()->getGroupe();
+        if ($groupe_cours !== $groupe_eleve) {
+            $context->buildViolation("Le groupe de l'élève et du groupe doivent être les mêmes")
+                ->atPath("absent")
+                ->addViolation();
+        }
     }
 }

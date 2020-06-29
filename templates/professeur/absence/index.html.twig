@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Absences {% if is_exam(cours) %}de l'examen{% else %}du cours{% endif %} {{ cours }}{% endblock %}
+{% block body %}
+    {% embed "user/_navbar.html.twig" %}
+    {% endembed %}
+    {% embed "user/_container.html.twig" %}
+        {% block container %}
+
+            {% embed "user/_card.html.twig" with {card_header:1} %}
+                {% block header %}<b>
+                    Absences {% if is_exam(cours) %}de l'examen{% else %}du cours{% endif %} {{ cours }}</b>
+                {% endblock %}
+                {% block text %}
+                    {% if peut_ajouter %}
+                    <a class="btn btn-success" href="{{ path("prof_cours_absence_new", {id: cours.id}) }}">Ajouter une
+                        absence</a>
+                    {% endif %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Eleve</th>
+                                <th>Date</th>
+                                <th>Justifiée</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for absence in absences %}
+                                <tr>
+                                    <td>{{ absence.absent.prenom|capitalize ~ " " ~ absence.absent.nom|upper }}</td>
+                                    <td>{{ absence.cours.debut|date('d-m-Y') }}</td>
+                                    <td>{% if absence.statut %}
+                                            <i class="far fa-check-square"></i>
+                                        {% else %}
+                                            <i class="far fa-square"></i>
+                                        {% endif %}
+
+                                    </td>
+                                    <td>
+                                        <a href="{{ path("prof_cours_absence_delete", {id: absence.cours.id, id_abs: absence.id}) }}">Supprimer</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">Pas d'absences.</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <a class="btn btn-warning" href="{{ path("prof_cours",{id: cours.id}) }}">Retourner aux cours</a>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+

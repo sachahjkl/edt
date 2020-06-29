@@ -18,10 +18,10 @@ class CoursController extends AbstractController
     /**
      * @Route("/{id}", name="_show", methods={"GET"})
      */
-    public function show(Cours $cour): Response
+    public function show(Cours $cours): Response
     {
         return $this->render('cours/show.html.twig', [
-            'cour' => $cour,
+            'cours' => $cours,
         ]);
     }
 }
