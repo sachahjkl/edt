@@ -230,10 +230,12 @@ class ProfesseurController extends AbstractController
                 "examen" => $examen
             ]);
             $moyenne = 0;
-            foreach ($notes as $note) {
-                $moyenne += $note->getNote();
+            if ($notes) {
+                foreach ($notes as $note) {
+                    $moyenne += $note->getNote();
+                }
+                $moyenne = $moyenne / count($notes);
             }
-            $moyenne = $moyenne / count($notes);
 
             return $this->render("professeur/note/index.html.twig", [
                     "examen" => $examen,

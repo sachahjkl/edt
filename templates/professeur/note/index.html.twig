@@ -16,8 +16,8 @@
                         <a class="btn btn-success" href="{{ path("prof_exam_note_new", {id: examen.id}) }}">Ajouter une
                             note</a>
                     {% endif %}
-                    <hr>
                     {% if notes is not empty %}
+                        <hr>
                         <p>La moyenne de l'examen est de <b>{{ moyenne|round(2) }}</b> / {{ examen.noteMax }}</p>
                     {% endif %}
                     <div class="table-responsive">
