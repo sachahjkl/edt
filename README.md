@@ -24,9 +24,14 @@ Une version live du projet est aussi disponible à l'adresse <https://edt.sachaf
 
 une documentation pour installer l'environnement est disponible dans `/docs/`
 
+## Téléchargement des dépendances
+
+Pour télécharger automatiquement les dépendendances, il est necessaire d'avoir **composer** d'installé.  
+Il faudra ensuite taper la commande `composer update`.
+
 ## Code
 
-le code utile se trouve essentiellement dans les répertoires :
+Le code utile se trouve essentiellement dans les répertoires :
 
 - `/src/`
 - `/templates/`
