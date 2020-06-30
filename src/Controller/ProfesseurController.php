@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Absence;
 use App\Entity\Eleve;
+use App\Entity\Examen;
+use App\Entity\Note;
 use App\Form\ProfCoursType;
 use App\Form\ProfProfileType;
 use App\Form\ResetPasswordType;
@@ -11,10 +13,13 @@ use App\Repository\AbsenceRepository;
 use App\Repository\CoursRepository;
 use App\Repository\EleveRepository;
 use App\Repository\ExamenRepository;
+use App\Repository\NoteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -139,7 +144,7 @@ class ProfesseurController extends AbstractController
      * @param CoursRepository $coursRepository
      * @param EleveRepository $eleveRepository
      */
-    public function newCoursAbsences(Request $request, CoursRepository $coursRepository, EleveRepository $eleveRepository)
+    public function newCoursAbsence(Request $request, CoursRepository $coursRepository, EleveRepository $eleveRepository)
     {
         $id = $request->get("id");
         $cours = $coursRepository->findOneBy([
@@ -184,7 +189,7 @@ class ProfesseurController extends AbstractController
      * @Route("/cours/{id}/absence/{id_abs}/delete", name="_cours_absence_delete")
      * @param Request $request
      */
-    public function deleteCoursAbsences(Request $request, CoursRepository $coursRepository, AbsenceRepository $absenceRepository)
+    public function deleteCoursAbsence(Request $request, CoursRepository $coursRepository, AbsenceRepository $absenceRepository)
     {
         $id = $request->get("id");
         $cours = $coursRepository->findOneBy([
@@ -208,14 +213,114 @@ class ProfesseurController extends AbstractController
     }
 
     /**
-     * @Route("/exam/{id}/notes", name="_exam_notes")
+     * @Route("/exam/{id}/note", name="_exam_notes")
      * @param Response $response
      * @param ExamenRepository $examenRepository
      */
-    public
-    function indexExamNotes()
+    public function indexExamNotes(Request $request, ExamenRepository $examenRepository, NoteRepository $noteRepository, EleveRepository $eleveRepository)
     {
+        $id = $request->get("id");
+        $examen = $examenRepository->findOneBy([
+            "professeur" => $this->getUser(),
+            "id" => $id
+        ]);
+
+        if ($examen) {
+            $notes = $noteRepository->findBy([
+                "examen" => $examen
+            ]);
+            $moyenne = 0;
+            foreach ($notes as $note) {
+                $moyenne += $note->getNote();
+            }
+            $moyenne = $moyenne / count($notes);
+
+            return $this->render("professeur/note/index.html.twig", [
+                    "examen" => $examen,
+                    "notes" => $notes,
+                    "moyenne" => $moyenne,
+                    "peut_ajouter" => (count($eleveRepository->getElevesSansNotes($examen)) != 0)
+                ]
+            );
+        }
         return $this->redirectToRoute("prof_cours");
+    }
+
+    /**
+     * @Route("/exam/{id}/note/new", name="_exam_note_new")
+     * @param Request $request
+     * @param CoursRepository $coursRepository
+     * @param EleveRepository $eleveRepository
+     * @return RedirectResponse|Response
+     */
+    public function newExamNotes(Request $request, ExamenRepository $examenRepository, EleveRepository $eleveRepository)
+    {
+        $id = $request->get("id");
+        $examen = $examenRepository->findOneBy([
+            "professeur" => $this->getUser(),
+            "id" => $id
+        ]);
+        if ($examen) {
+            $note = new Note();
+            $note->setExamen($examen);
+            $eleves_sans_absences = $eleveRepository->getElevesSansNotes($examen);
+            if (count($eleves_sans_absences) == 0) {
+                return $this->redirectToRoute("prof_exam_notes", ["id" => $id]);
+            }
+            $form = $this->createFormBuilder($note)
+                ->add("eleve", EntityType::class, [
+                    'class' => Eleve::class,
+                    'choices' => $eleves_sans_absences,
+                    'label' => "Élève à noter"
+                ])
+                ->add("note", NumberType::class, [
+                    "label" => "Note"
+                ])
+                ->add("save", SubmitType::class, [
+                    "label" => "Enregister la note"
+                ])->getForm();
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $note = $form->getData();
+                $entityManager->persist($note);
+                $entityManager->flush();
+                return $this->redirectToRoute("prof_exam_notes", ["id" => $id]);
+            }
+
+            return $this->render("professeur/note/new.html.twig", [
+                'form' => $form->createView(),
+                "examen" => $examen
+            ]);
+        }
+        return $this->redirectToRoute("prof_cours");
+    }
+
+    /**
+     * @Route("/exam/{id}/note/{id_note}/delete", name="_exam_note_delete")
+     * @param Request $request
+     */
+    public function deleteExamNote(Request $request, ExamenRepository $examenRepository, NoteRepository $noteRepository)
+    {
+        $id = $request->get("id");
+        $examen = $examenRepository->findOneBy([
+            "professeur" => $this->getUser(),
+            "id" => $id
+        ]);
+        if ($examen) {
+            $id_note = $request->get("id_note");
+            $note = $noteRepository->findOneBy([
+                "examen" => $examen,
+                "id" => $id_note
+            ]);
+            if ($note) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($note);
+                $entityManager->flush();
+            }
+        }
+        return $this->redirectToRoute("prof_exam_notes", ["id" => $id]);
     }
 
 }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cours de {{ app.user.prenom|capitalize ~ " " ~ app.user.nom|upper }}{% endblock %}
+{% block title %}Cours & examens de {{ app.user.prenom|capitalize ~ " " ~ app.user.nom|upper }}{% endblock %}
 {% block body %}
     {% embed "user/_navbar.html.twig" %}
     {% endembed %}
@@ -8,7 +8,7 @@
         {% block container %}
 
             {% embed "user/_card.html.twig" with {card_header:1} %}
-                {% block header %}<b>Cours de {{ app.user.prenom|capitalize ~ " " ~ app.user.nom|upper }}</b>
+                {% block header %}<b>Cours & examens de {{ app.user.prenom|capitalize ~ " " ~ app.user.nom|upper }}</b>
                 {% endblock %}
                 {% block text %}
                     <div class="table-responsive">

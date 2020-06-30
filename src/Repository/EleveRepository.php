@@ -63,6 +63,33 @@ class EleveRepository extends ServiceEntityRepository implements PasswordUpgrade
         return $qb->getQuery()->getResult();
     }
 
+    public function getElevesSansNotes(\App\Entity\Examen $examen)
+    {
+
+        $entityManager = $this->getEntityManager();
+        $qb = $entityManager->createQueryBuilder();
+        $eleves_deja_notes = $qb->select("e")
+            ->from("App:Eleve", "e")
+            ->leftJoin("e.notes", "n")
+            ->where("n.examen = :examen")
+            ->setParameter("examen", $examen)
+            ->getQuery()
+            ->getResult();
+
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select("e")
+            ->from("App:Eleve", "e")
+            ->where($qb->expr()->eq("e.groupe", ":groupe"))
+            ->setParameter("groupe", $examen->getGroupe());
+        if (count($eleves_deja_notes) != 0) {
+            $qb->andWhere($qb->expr()->notIn("e", ":eleves_deja_notes"))
+                ->setParameter("eleves_deja_notes", $eleves_deja_notes);
+        }
+
+        return $qb->getQuery()->getResult();
+
+    }
+
 
     // /**
     //  * @return Eleve[] Returns an array of Eleve objects
@@ -92,4 +119,5 @@ class EleveRepository extends ServiceEntityRepository implements PasswordUpgrade
         ;
     }
     */
+
 }

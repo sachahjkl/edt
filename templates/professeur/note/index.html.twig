@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notes de l'examen{{ examen }}{% endblock %}
+{% block body %}
+    {% embed "user/_navbar.html.twig" %}
+    {% endembed %}
+    {% embed "user/_container.html.twig" %}
+        {% block container %}
+
+            {% embed "user/_card.html.twig" with {card_header:1} %}
+                {% block header %}<b>
+                    Notes de l'examen {{ examen }}</b>
+                {% endblock %}
+                {% block text %}
+                    {% if peut_ajouter %}
+                        <a class="btn btn-success" href="{{ path("prof_exam_note_new", {id: examen.id}) }}">Ajouter une
+                            note</a>
+                    {% endif %}
+                    <hr>
+                    {% if notes is not empty %}
+                        <p>La moyenne de l'examen est de <b>{{ moyenne|round(2) }}</b> / {{ examen.noteMax }}</p>
+                    {% endif %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Eleve</th>
+                                <th>Date</th>
+                                <th>Note</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for note in notes %}
+                                <tr>
+                                    <td>{{ note.eleve.prenom|capitalize ~ " " ~ note.eleve.nom|upper }}</td>
+                                    <td>{{ note.examen.debut|date('d-m-Y') }}</td>
+                                    <td>{{ note.note }}</td>
+                                    <td>
+                                        <a href="{{ path("prof_exam_note_delete", {id: note.examen.id, id_note: note.id}) }}">Supprimer</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">Pas de notes.</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <a class="btn btn-warning" href="{{ path("prof_cours") }}">Retourner aux cours & examens</a>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+
