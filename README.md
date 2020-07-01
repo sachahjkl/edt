@@ -1,37 +1,39 @@
-# Guide pour lancer le projet
+[English](README.md) | [Français](README.fr.md)
 
-## Base de données
+# Guide to Running the Project
 
-La base de données (PostgreSQL) utilisée est celle de test sur notre VPS.
+## Database
+
+The project uses the test PostgreSQL database on our VPS.
 
 ## **PHP** 7.3
 
-On utilisera la version dernière version 7.3 de **PHP**. On peut la télécharger ici :
+Use the latest version of **PHP** 7.3. Download it here:
 
 https://windows.php.net/download/
 https://windows.php.net/downloads/releases/php-7.3.17-nts-Win32-VC15-x64.zip (7.3.17)
 
-## Symfony et lancer serveur local
+## Symfony and the Local Server
 
-pour lancer un serveur local dans le répertoire du projet, le plus simple est de servir le dossier /public
-ou bien d'installer l'outil symfony-cli <https://symfony.com/download>
+To start a local server in the project directory, serve the /public directory.
+Alternatively, install the symfony-cli tool from <https://symfony.com/download>.
 
-puis de lancer dans le répertoire du projet la commande `symfony server:start --no-tls`
+Then run `symfony server:start --no-tls` in the project directory.
 
-Une version live du projet est aussi disponible à l'adresse <https://edt.sachafroment.fr>
+A live version of the project is also available at <https://edt.sachafroment.fr>.
 
 ## Documentation
 
-une documentation pour installer l'environnement est disponible dans `/docs/`
+Documentation for installing the environment is available in `/docs/`.
 
-## Téléchargement des dépendances
+## Downloading Dependencies
 
-Pour télécharger automatiquement les dépendendances, il est necessaire d'avoir **composer** d'installé.  
-Il faudra ensuite taper la commande `composer update`.
+Install **composer** to download the dependencies automatically.
+Then run `composer update`.
 
 ## Code
 
-Le code utile se trouve essentiellement dans les répertoires :
+Most of the relevant code is in these directories:
 
 - `/src/`
 - `/templates/`
