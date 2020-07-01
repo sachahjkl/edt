@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-  locale: 'fr'
+  locale: fr
   uploads_path: '/uploads'
   uploads_path_images: '%uploads_path%/images'
   profile_pictures: '%uploads_path_images%/profile_pictures'

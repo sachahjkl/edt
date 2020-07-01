@@ -6,6 +6,7 @@ use App\Repository\MatiereRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MatiereRepository::class)
@@ -26,6 +27,8 @@ class Matiere
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\PositiveOrZero()
+     * @Assert\LessThanOrEqual(200)
      */
     private $credits_ects;
 
@@ -35,7 +38,7 @@ class Matiere
     private $cours;
 
     /**
-     * @ORM\OneToOne(targetEntity=Professeur::class, inversedBy="matiere_responsable", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Professeur::class, inversedBy="matiere_responsable", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $responsable;

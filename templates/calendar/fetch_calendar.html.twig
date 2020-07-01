@@ -15,6 +15,13 @@
                 editable: false,
                 plugins: ['dayGrid', 'timeGrid', 'list', 'bootstrap'], // https://fullcalendar.io/docs/plugin-index
                 defaultView: 'timeGridWeek',
+                // buttonText: {
+                //     today: "Aujourd'hui",
+                //     month: 'Mois',
+                //     week: 'Semaine',
+                //     day: 'Jours',
+                //     list: 'Liste'
+                // },
                 eventSources: [
                     {
                         url: "/fc-load-events",
@@ -68,6 +75,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/list@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/locales/fr.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 {% endblock %}
 

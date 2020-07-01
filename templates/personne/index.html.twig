@@ -6,11 +6,11 @@
     {% endembed %}
     {% embed "user/_container_fluid.html.twig" %}
         {% block container_fluid %}
-            <div class="row mx-0 mx-lg-2">
-                <div class="col-lg-8 col-12">
+            <div class="row mx-0">
+                <div class="col-lg-8 col-12 px-0 p-md-2">
                     {% embed "user/_card.html.twig" with {card_header:1} %}
                         {% block header %}<b>
-                            Bienvenu(e) {{ app.user.prenom|capitalize }} {{ app.user.nom|upper }}</b> - Emploi du temps {{ app.user.groupe is defined ? app.user.groupe|upper : "" }}
+                           Bienvenu(e) {{ app.user.prenom|capitalize }} {{ app.user.nom|upper }}</b> - Emploi du temps {{ app.user.groupe is defined ? app.user.groupe|upper : "" }}
                         {% endblock %}
                         {% block text %}
                             {% embed "calendar/fetch_calendar.html.twig" with {calendar_id: "cal_1"} %}
@@ -18,7 +18,7 @@
                         {% endblock %}
                     {% endembed %}
                 </div>
-                <div class="col-lg-4 col-12">
+                <div class="col-lg-4 col-12 px-0 p-md-2">
                     {% embed "user/_card.html.twig" with {card_header:1} %}
                         {% block header %}
                             Actualités

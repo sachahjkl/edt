@@ -248,9 +248,34 @@ class Cours
                 ->atPath("debut")
                 ->addViolation();
         }
-        if ($this->getFin()->format("H") > 20) {
-            $context->buildViolation("Les cours se terminent à 20h au plus tard")
+
+        if ($this->getFin()->format("H") < 9 ) {
+            $context->buildViolation("Les cours finissent à partir de 9h au plus tôt.")
                 ->atPath("fin")
+                ->addViolation();
+        }
+
+        if ($this->getDebut()->format("H") > 19 && $this->getDebut()->format("i") > 0) {
+            $context->buildViolation("Les cours commencent à 19h au plus tard")
+                ->atPath("debut")
+                ->addViolation();
+        }
+
+        if ($this->getFin()->format("H") > 20 && $this->getFin()->format("i") > 0) {
+            $context->buildViolation("Les cours se terminent à 20h au plus tard.")
+                ->atPath("fin")
+                ->addViolation();
+        }
+
+        if ($this->getDebut()->format("N") == 7 ){
+            $context->buildViolation("Les cours n'ont pas lieu le dimanche.")
+                ->atPath("debut")
+                ->addViolation();
+        }
+
+        if ($this->getFin()->format("N") == 7 ){
+            $context->buildViolation("Les cours n'ont pas lieu le dimanche.")
+                ->atPath("fin²")
                 ->addViolation();
         }
 

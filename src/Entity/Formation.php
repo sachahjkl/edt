@@ -38,8 +38,8 @@ class Formation
     private $groupes;
 
     /**
-     * @ORM\OneToOne(targetEntity=Professeur::class, inversedBy="formation_responsable", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity=Professeur::class, inversedBy="formation_responsable", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $responsable;
 

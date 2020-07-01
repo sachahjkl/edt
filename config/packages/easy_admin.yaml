@@ -1,8 +1,8 @@
 easy_admin:
   site_name: "Gestion d'EDT"
   formats:
-    date: 'd/m/Y'
-    datetime: 'd/m/Y H:i'
+    date: 'l d M Y'
+    datetime: 'l d M Y H:i'
   design:
     brand_color: '#5c70d6'
     assets:
