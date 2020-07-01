@@ -1,5 +1,3 @@
-[English](README.md) | [Français](README.fr.md)
-
 # Guide to Running the Project
 
 ## Database
