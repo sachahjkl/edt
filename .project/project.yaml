@@ -1,0 +1,8 @@
+name: "edt"
+description: "Implémentation en Symfony d'un système de gestion des éléments administratifs de scolarité d'un établissement (notes, emploi du temps, assignation de professeur, administration des données, ...)"
+topics: []
+homepage: ""
+source:
+  provider: gitlab
+  namespace: "cnam_a1_projet"
+  path: "cnam_a1_projet/edt"
